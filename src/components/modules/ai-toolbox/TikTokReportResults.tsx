@@ -226,7 +226,7 @@ export function TikTokReportResults({ category, sellingPoints, onBack, onReplica
             <div key={video.videoId} className="relative">
               <TikTokVideoCard
                 video={video}
-                onReplicate={() => onReplicate(video.videoId)}
+                onReplicate={() => onReplicate(video.videoId, video.title, video.viewCountText, video.likeCountText)}
                 onPreview={() => setPreviewIndex(idx)}
               />
               {/* Save/Bookmark button overlay */}
