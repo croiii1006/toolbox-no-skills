@@ -527,7 +527,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
                     <Sparkles className="w-3.5 h-3.5 text-primary" />
                     <span>复刻视频prompt已生成！</span>
                   </div>
-                  <p className="text-sm text-foreground/60 leading-relaxed whitespace-pre-line line-clamp-3">{run.prompt}</p>
+                  <p className="text-sm text-foreground/60 leading-relaxed whitespace-pre-line">{run.prompt}</p>
                 </div>
                 {run.generatedVideoUrl && (
                   <div className="rounded-xl border border-border/30 bg-card/60 p-4 space-y-2">
