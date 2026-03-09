@@ -572,8 +572,53 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
               </div>
             }
 
-            {/* ── Step 4: Replicate prompt (editable, copyable, confirmable) ── */}
-            {stepIndex >= 3 && replicatePrompt &&
+            {/* ── Completed rounds (immutable) ── */}
+            {completedRounds.map((round, idx) =>
+            <React.Fragment key={idx}>
+              {/* Immutable prompt card */}
+              <div className="rounded-xl border border-border/20 bg-card/40 p-4 space-y-3 opacity-80">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-xs text-foreground/50">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>复刻视频prompt（第 {idx + 1} 次）</span>
+                  </div>
+                  <button
+                    onClick={() => {navigator.clipboard.writeText(round.prompt);toast.success('已复制到剪贴板');}}
+                    className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors">
+                    <Copy className="w-3 h-3" />
+                    复制
+                  </button>
+                </div>
+                <p className="text-sm text-foreground/60 leading-relaxed whitespace-pre-line select-text">{round.prompt}</p>
+              </div>
+              {/* Immutable video card */}
+              <div className="rounded-xl border border-border/20 bg-card/40 p-4 space-y-3 opacity-80">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-xs text-foreground/50">
+                    <Check className="w-3.5 h-3.5 text-muted-foreground" />
+                    <span>复刻视频（第 {idx + 1} 次）</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <a href={round.videoUrl} download={`replicated-video-${idx + 1}.mp4`}
+                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors">
+                      <Download className="w-3 h-3" />下载
+                    </a>
+                    <button onClick={() => {setPreviewingVideoUrl(round.videoUrl);setVideoDialogOpen(true);}}
+                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors">
+                      <Maximize2 className="w-3 h-3" />放大
+                    </button>
+                  </div>
+                </div>
+                <div className="relative rounded-lg overflow-hidden bg-muted/20 cursor-pointer"
+                  onClick={() => {setPreviewingVideoUrl(round.videoUrl);setVideoDialogOpen(true);}}>
+                  <video src={round.videoUrl} muted loop playsInline className="w-full max-h-[300px] object-contain" />
+                </div>
+              </div>
+            </React.Fragment>
+            )}
+
+            {/* ── Current round: prompt card (no edit button after done) ── */}
+            {stepIndex >= 3 && replicatePrompt && !isEditingPrompt &&
             <div className="rounded-xl border border-primary/30 bg-card/60 p-4 space-y-3 animate-fade-in">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-xs text-foreground/70">
@@ -581,14 +626,6 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
                     <span>复刻视频prompt已生成！</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    {!isEditingPrompt && (convStep === 'fused' || convStep === 'done') &&
-                  <button
-                    onClick={() => setIsEditingPrompt(true)}
-                    className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors">
-                        <Edit3 className="w-3 h-3" />
-                        编辑
-                      </button>
-                  }
                     <button
                     onClick={handleCopyPrompt}
                     className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors">
@@ -597,32 +634,9 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
                   </div>
                 </div>
 
-                {isEditingPrompt ?
-              <div className="space-y-2">
-                    <textarea
-                  value={replicatePrompt}
-                  onChange={(e) => setReplicatePrompt(e.target.value)}
-                  className="w-full min-h-[120px] rounded-lg border border-border/30 bg-background/50 px-3 py-2 text-sm text-foreground leading-relaxed focus:outline-none focus:ring-1 focus:ring-primary/40 resize-y" />
-                
-                    <div className="flex justify-end gap-2">
-                      <button
-                    onClick={() => setIsEditingPrompt(false)}
-                    className="px-3 py-1.5 rounded-lg text-xs font-medium border border-border/30 text-foreground/70 hover:bg-muted/30 transition-colors">
-                        取消
-                      </button>
-                      <button
-                    onClick={() => {setIsEditingPrompt(false);handleConfirmReplicate();}}
-                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors flex items-center gap-1">
-                        <Play className="w-3 h-3" />
-                        确认并重新生成
-                      </button>
-                    </div>
-                  </div> :
+                <p className="text-sm text-foreground/80 leading-relaxed whitespace-pre-line select-text">{replicatePrompt}</p>
 
-              <p className="text-sm text-foreground/80 leading-relaxed whitespace-pre-line select-text">{replicatePrompt}</p>
-              }
-
-                {convStep === 'fused' && !isEditingPrompt &&
+                {convStep === 'fused' &&
               <button
                 onClick={handleConfirmReplicate}
                 className="w-full mt-2 py-2.5 rounded-xl text-sm font-medium bg-foreground text-background hover:bg-foreground/90 transition-colors flex items-center justify-center gap-2">
@@ -630,6 +644,36 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
                     确认复刻
                   </button>
               }
+              </div>
+            }
+
+            {/* ── New editable prompt card (for re-generation) ── */}
+            {isEditingPrompt &&
+            <div className="rounded-xl border border-primary/30 bg-card/60 p-4 space-y-3 animate-fade-in">
+                <div className="flex items-center gap-2 text-xs text-foreground/70">
+                  <Edit3 className="w-3.5 h-3.5 text-primary" />
+                  <span>编辑复刻视频prompt</span>
+                </div>
+                <textarea
+                  value={replicatePrompt}
+                  onChange={(e) => setReplicatePrompt(e.target.value)}
+                  className="w-full min-h-[120px] rounded-lg border border-border/30 bg-background/50 px-3 py-2 text-sm text-foreground leading-relaxed focus:outline-none focus:ring-1 focus:ring-primary/40 resize-y" />
+                <div className="flex justify-end gap-2">
+                  <button
+                    onClick={() => setIsEditingPrompt(false)}
+                    className="px-3 py-1.5 rounded-lg text-xs font-medium border border-border/30 text-foreground/70 hover:bg-muted/30 transition-colors">
+                    取消
+                  </button>
+                  <button
+                    onClick={() => {
+                      setIsEditingPrompt(false);
+                      handleConfirmReplicate();
+                    }}
+                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors flex items-center gap-1">
+                    <Play className="w-3 h-3" />
+                    确认并重新生成
+                  </button>
+                </div>
               </div>
             }
 
@@ -674,7 +718,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
                       下载
                     </a>
                     <button
-                    onClick={() => setVideoDialogOpen(true)}
+                    onClick={() => {setPreviewingVideoUrl(generatedVideoUrl);setVideoDialogOpen(true);}}
                     className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors">
                       <Maximize2 className="w-3 h-3" />
                       放大
@@ -683,7 +727,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
                 </div>
                 <div
                 className="relative rounded-lg overflow-hidden bg-muted/20 cursor-pointer"
-                onClick={() => setVideoDialogOpen(true)}>
+                onClick={() => {setPreviewingVideoUrl(generatedVideoUrl);setVideoDialogOpen(true);}}>
                   <video
                   src={generatedVideoUrl}
                   autoPlay
@@ -700,7 +744,15 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
             {convStep === 'done' && !isEditingPrompt &&
             <div className="flex justify-center pt-2">
                 <button
-                onClick={() => setIsEditingPrompt(true)}
+                onClick={() => {
+                  // Push current round to completed rounds
+                  if (generatedVideoUrl && replicatePrompt) {
+                    setCompletedRounds(prev => [...prev, { prompt: replicatePrompt, videoUrl: generatedVideoUrl }]);
+                  }
+                  setGeneratedVideoUrl(null);
+                  setConvStep('fused');
+                  setIsEditingPrompt(true);
+                }}
                 className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-medium border border-border/30 text-foreground/70 hover:bg-muted/20 hover:border-border/50 transition-colors">
                   <Edit3 className="w-3.5 h-3.5" />
                   编辑 Prompt 重新生成
@@ -715,14 +767,13 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
         <Dialog open={videoDialogOpen} onOpenChange={setVideoDialogOpen}>
           <DialogContent className="max-w-4xl p-2 bg-background/95 backdrop-blur-sm">
             <DialogTitle className="sr-only">复刻视频预览</DialogTitle>
-            {generatedVideoUrl &&
+            {previewingVideoUrl &&
             <video
-              src={generatedVideoUrl}
+              src={previewingVideoUrl}
               autoPlay
               controls
               playsInline
               className="w-full rounded-lg" />
-
             }
           </DialogContent>
         </Dialog>
