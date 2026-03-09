@@ -288,7 +288,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
     saveReplicateHistory(updated);
 
     setViewMode('conversation');
-    setConvStep('extracting');
+    setConvStep('fusing');
     setExtractedOriginalPrompt('');
     setReplicatePrompt('');
     setGeneratedVideoUrl(null);
@@ -303,21 +303,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
     console.log('ExtractPayload:', extractPayload);
 
     try {
-      // Step 1: Extract original prompt (2.5s)
-      await new Promise((r) => setTimeout(r, 2500));
-      const origPrompt = `开场：产品从画面底部升起，伴随粒子特效，镜头缓慢推近。\n中段：多角度展示产品细节，柔和暖色调灯光，浅景深背景虚化。\n收尾：品牌logo淡入，配合节奏感音乐收束。\n整体风格：高端电商广告，节奏紧凑，适合短视频传播。`;
-      setExtractedOriginalPrompt(origPrompt);
-      setConvStep('extracted');
-    } catch {
-      setErrorInfo({ step: 'extracting', message: '反推对标视频 Prompt 失败，请检查网络后重试' });
-      setIsExtracting(false);
-      return;
-    }
-
-    try {
-      // Step 2: Fuse selling points + product image (2s)
-      await new Promise((r) => setTimeout(r, 1500));
-      setConvStep('fusing');
+      // Generate replicate prompt by combining selling points
       await new Promise((r) => setTimeout(r, 2000));
       const fusePrompt = `产品特写镜头，柔和暖色灯光，缓慢推拉运镜，背景虚化，商品居中展示。\n\n核心卖点融入：${sellingPoints.join('、')}。${productImageFile ? '\n\n参考商品白底图进行产品外观还原。' : ''}\n\n电商广告风格，高清画质，节奏紧凑，适合 TikTok 短视频传播。`;
       setReplicatePrompt(fusePrompt);
