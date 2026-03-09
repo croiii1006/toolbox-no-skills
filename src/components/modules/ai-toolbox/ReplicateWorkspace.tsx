@@ -142,6 +142,17 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
   /* ── History ── */
   const [history, setHistory] = useState<ReplicateHistoryItem[]>(loadReplicateHistory);
 
+  /* ── Past conversation runs ── */
+  interface PastRun {
+    id: string;
+    videoName: string;
+    sellingPoints: string[];
+    prompt: string;
+    generatedVideoUrl: string | null;
+    inspirationVideo: InspirationVideo | null;
+  }
+  const [pastRuns, setPastRuns] = useState<PastRun[]>([]);
+
   /* ── Action & Status ── */
   const hasVideoSource = !!(styleVideoFile || inspirationVideo);
   const canSend = hasVideoSource && sellingPoints.length > 0;
@@ -281,6 +292,18 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
     const updated = [newItem, ...history].slice(0, 20);
     setHistory(updated);
     saveReplicateHistory(updated);
+
+    // Save current run to past runs if there's an existing conversation
+    if (viewMode === 'conversation' && replicatePrompt) {
+      setPastRuns(prev => [...prev, {
+        id: crypto.randomUUID(),
+        videoName: styleVideoFile?.name || inspirationVideo?.title || '—',
+        sellingPoints: [...sellingPoints],
+        prompt: replicatePrompt,
+        generatedVideoUrl,
+        inspirationVideo: inspirationVideo || null,
+      }]);
+    }
 
     setViewMode('conversation');
     setConvStep('fusing');
@@ -473,7 +496,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
         {/* ── Top bar ── */}
         <div className="shrink-0 px-6 py-3 border-b border-border/20 flex items-center gap-2">
           <button
-            onClick={() => {setViewMode('composer');setExtractedPromptText('');setSellingPoints([]);setStyleVideoFile(null);setStyleVideoUrl(null);setProductImageFile(null);setProductImageUrl(null);setInspirationVideo(null);setGeneratedVideoUrl(null);}}
+            onClick={() => {setViewMode('composer');setExtractedPromptText('');setSellingPoints([]);setStyleVideoFile(null);setStyleVideoUrl(null);setProductImageFile(null);setProductImageUrl(null);setInspirationVideo(null);setGeneratedVideoUrl(null);setPastRuns([]);}}
             className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors">
             <ArrowLeft className="w-3.5 h-3.5" />
             返回
@@ -483,6 +506,41 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
         {/* ── Steps area ── */}
         <div className="flex-1 overflow-y-auto">
           <div className="max-w-2xl mx-auto px-6 py-8 space-y-5">
+
+            {/* ── Past conversation runs ── */}
+            {pastRuns.map((run) => (
+              <div key={run.id} className="space-y-3 opacity-60">
+                <div className="rounded-xl border border-border/20 bg-muted/10 p-4 space-y-2">
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Video className="w-3.5 h-3.5" />
+                    <span>对标视频：{run.videoName}</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span className="text-xs text-muted-foreground">卖点：</span>
+                    {run.sellingPoints.map((p) => (
+                      <span key={p} className="inline-flex h-5 items-center rounded-full bg-muted/40 border border-border/20 px-2 text-[11px] text-foreground/70">{p}</span>
+                    ))}
+                  </div>
+                </div>
+                <div className="rounded-xl border border-border/30 bg-card/60 p-4 space-y-2">
+                  <div className="flex items-center gap-2 text-xs text-foreground/70">
+                    <Sparkles className="w-3.5 h-3.5 text-primary" />
+                    <span>复刻视频prompt已生成！</span>
+                  </div>
+                  <p className="text-sm text-foreground/60 leading-relaxed whitespace-pre-line line-clamp-3">{run.prompt}</p>
+                </div>
+                {run.generatedVideoUrl && (
+                  <div className="rounded-xl border border-border/30 bg-card/60 p-4 space-y-2">
+                    <div className="flex items-center gap-2 text-xs text-foreground/70">
+                      <Check className="w-3.5 h-3.5 text-emerald-500" />
+                      <span>复刻视频已完成</span>
+                    </div>
+                    <video src={run.generatedVideoUrl} muted loop playsInline className="w-full max-h-[200px] object-contain rounded-lg" />
+                  </div>
+                )}
+                <div className="border-b border-border/10 my-2" />
+              </div>
+            ))}
 
             {/* Summary card */}
             <div className="rounded-xl border border-border/20 bg-muted/10 p-4 space-y-2">
