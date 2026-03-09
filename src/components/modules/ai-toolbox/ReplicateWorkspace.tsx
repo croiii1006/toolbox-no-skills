@@ -575,7 +575,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-xs text-foreground/70">
                     <Sparkles className="w-3.5 h-3.5 text-primary" />
-                    <span>复刻 Prompt</span>
+                    <span>复刻视频prompt已生成！</span>
                   </div>
                   <div className="flex items-center gap-2">
                     {!isEditingPrompt && (convStep === 'fused' || convStep === 'done') &&
