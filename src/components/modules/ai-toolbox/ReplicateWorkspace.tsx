@@ -37,6 +37,9 @@ import { type HistoryStatus, statusConfig } from '@/types/history';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { useMemory } from '@/contexts/MemoryContext';
+import { MemorySelectionDialog } from '@/components/modules/memory/MemorySelectionDialog';
+import { Button } from '@/components/ui/button';
 
 /* ─── Field Contract Types (DO NOT MODIFY) ─── */
 
