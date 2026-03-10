@@ -130,6 +130,17 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
   const { t } = useTranslation();
   const { savedVideos, unsaveVideo } = useTikTokInspiration();
   const { consumePrefill } = useReplicatePrefill();
+  const { entries } = useMemory();
+
+  /* ── Memory ── */
+  const [selectedMemoryIds, setSelectedMemoryIds] = useState<string[]>([]);
+  const [memoryDialogOpen, setMemoryDialogOpen] = useState(false);
+  const memoryItems = useMemo(() => entries.map((e) => ({
+    id: e.id, name: e.title, desc: e.content.slice(0, 60), tag: e.category, charCount: e.content.length,
+  })), [entries]);
+  const toggleMemory = useCallback((id: string) => {
+    setSelectedMemoryIds(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
+  }, []);
 
   /* ── Input Side ── */
   const [styleVideoFile, setStyleVideoFile] = useState<File | null>(null);
