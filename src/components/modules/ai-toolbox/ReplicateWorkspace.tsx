@@ -922,7 +922,21 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
           </div>
 
           {/* Bottom toolbar */}
-          <div className="flex items-center justify-end px-5 py-3 border-t border-border/20">
+          <div className="flex items-center justify-between px-5 py-3 border-t border-border/20">
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                className={cn(
+                  "h-7 gap-1 px-2 text-xs hover:text-foreground",
+                  selectedMemoryIds.length > 0 ? "text-foreground" : "text-muted-foreground"
+                )}
+                onClick={() => setMemoryDialogOpen(true)}
+              >
+                <Database className="h-3.5 w-3.5" />
+                记忆库{selectedMemoryIds.length > 0 ? ` (${selectedMemoryIds.length})` : ''}
+              </Button>
+            </div>
             <div className="flex items-center gap-3">
               
               <button
