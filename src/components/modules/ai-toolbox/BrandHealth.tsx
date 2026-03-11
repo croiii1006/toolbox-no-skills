@@ -3,6 +3,8 @@ import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Download, FileText, AlertTriangle, TrendingUp, Users, Target, Shield, Zap, ChevronRight, ExternalLink, Database, History, X, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useCredits } from '@/contexts/CreditsContext';
+import { InsufficientCreditsDrawer } from '@/components/modules/InsufficientCreditsDrawer';
 import { useMemory } from '@/contexts/MemoryContext';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
