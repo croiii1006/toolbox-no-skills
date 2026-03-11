@@ -358,7 +358,41 @@ export function BrandHealth({ onNavigate }: BrandHealthProps) {
     );
   }
 
+  // Check if this is the NC IntimaPods mock report
+  const isIntimaPodsMock = formData.brandName.trim().toLowerCase() === 'nc intimapods';
+
   // Report Dashboard View
+  if (isIntimaPodsMock) {
+    return (
+      <>
+        <div className="h-[calc(100vh-4rem)] flex flex-col animate-fade-in">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-border/30 bg-background/80 backdrop-blur-sm shrink-0">
+            <Button variant="ghost" onClick={handleBack} className="gap-2 text-muted-foreground hover:text-foreground">
+              <ArrowLeft className="h-4 w-4" />
+              {isZh ? '返回重新生成' : 'Back to Regenerate'}
+            </Button>
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" className="gap-2" onClick={handleCopyToMemory}>
+                <Database className="h-4 w-4" />
+                {isZh ? '复制到记忆库' : 'Copy to Memory'}
+              </Button>
+              <Button variant="outline" size="sm" className="gap-2" onClick={() => window.open('/reports/IntimaPods.html', '_blank')}>
+                <ExternalLink className="h-4 w-4" />
+                {isZh ? '新窗口打开' : 'Open in New Tab'}
+              </Button>
+            </div>
+          </div>
+          <iframe
+            src="/reports/IntimaPods.html"
+            className="flex-1 w-full border-0"
+            title="NC IntimaPods 市场洞察报告"
+          />
+        </div>
+        <InsufficientCreditsDrawer open={creditsDrawerOpen} onOpenChange={setCreditsDrawerOpen} shortfall={creditsShortfall} />
+      </>
+    );
+  }
+
   return (
     <ScrollArea className="h-[calc(100vh-4rem)]">
       <div className="min-h-full bg-muted/30 p-4 md:p-6">
