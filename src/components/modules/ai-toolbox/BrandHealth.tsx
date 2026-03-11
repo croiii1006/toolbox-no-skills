@@ -156,7 +156,14 @@ export function BrandHealth({ onNavigate }: BrandHealthProps) {
   };
 
   const handleGenerate = (payload: { brandName: string; category: string; competitors: string[] }) => {
-    setFormData(payload);
+    // Credit check
+    if (!canAfford(REPORT_COST)) {
+      setCreditsShortfall(getShortfall(REPORT_COST));
+      setCreditsDrawerOpen(true);
+      return;
+    }
+    deduct(REPORT_COST);
+
     setIsLoading(true);
     setView('loading');
     const newId = crypto.randomUUID();
