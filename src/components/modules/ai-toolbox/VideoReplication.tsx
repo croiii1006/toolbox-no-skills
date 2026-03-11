@@ -892,6 +892,30 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
               />
             </div>
 
+            {/* Memory Library Button */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setMemoryDialogOpen(true)}
+                className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-muted/30 text-muted-foreground/60 hover:bg-foreground/5 hover:text-muted-foreground transition-colors">
+                <Database className="w-3 h-3" />
+                <span className="text-[11px]">记忆库{selectedMemoryIds.length > 0 ? ` (${selectedMemoryIds.length})` : ''}</span>
+              </button>
+            </div>
+
+            {/* Selected Memory Tags */}
+            {selectedMemoryIds.length > 0 && (
+              <div className="flex flex-wrap gap-1.5">
+                {selectedMemoryIds.map((id) => {
+                  const item = memoryItems.find((m) => m.id === id);
+                  return item ? (
+                    <span key={id} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[11px]">
+                      {item.name}
+                    </span>
+                  ) : null;
+                })}
+              </div>
+            )}
+
             {/* Analyze Button */}
             {originalVideo && referenceImage && sellingPoints.trim() && (
               <Button 
