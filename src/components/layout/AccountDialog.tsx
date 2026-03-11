@@ -78,15 +78,15 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                   </div>
                   <div className="flex items-center">
                     <span className="text-muted-foreground w-40 font-light">{t('common.availableCredits')}</span>
-                    <span className="text-foreground font-normal">{USER_CREDITS}</span>
+                    <span className="text-foreground font-normal tabular-nums">{credits}</span>
                   </div>
                   <div className="flex items-center">
                     <span className="text-muted-foreground w-40 font-light pl-4">{t('common.subscriptionCredits')}</span>
-                    <span className="text-foreground font-light">{USER_SUBSCRIPTION_CREDITS}</span>
+                    <span className="text-foreground font-light tabular-nums">{subscriptionCredits}</span>
                   </div>
                   <div className="flex items-center">
                     <span className="text-muted-foreground w-40 font-light pl-4">{t('common.topupCredits')}</span>
-                    <span className="text-foreground font-light">{USER_TOPUP_CREDITS}</span>
+                    <span className="text-foreground font-light tabular-nums">{topupCredits}</span>
                   </div>
                 </div>
               </div>
