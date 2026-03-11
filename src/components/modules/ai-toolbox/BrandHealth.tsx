@@ -341,17 +341,20 @@ export function BrandHealth({ onNavigate }: BrandHealthProps) {
   // Input Form View - Chat Composer
   if (view === 'input') {
     return (
-      <div className="relative h-full">
-        <div className="absolute top-4 right-4 z-20">
-          {historySheet}
+      <>
+        <div className="relative h-full">
+          <div className="absolute top-4 right-4 z-20">
+            {historySheet}
+          </div>
+          <MarketInsightComposer
+            key={historyKey}
+            onSubmit={handleGenerate}
+            disabled={isLoading}
+            initialData={historyLoadData ? { brandName: historyLoadData.brandName, category: historyLoadData.category, competitors: historyLoadData.competitors } : undefined}
+          />
         </div>
-        <MarketInsightComposer
-          key={historyKey}
-          onSubmit={handleGenerate}
-          disabled={isLoading}
-          initialData={historyLoadData ? { brandName: historyLoadData.brandName, category: historyLoadData.category, competitors: historyLoadData.competitors } : undefined}
-        />
-      </div>
+        <InsufficientCreditsDrawer open={creditsDrawerOpen} onOpenChange={setCreditsDrawerOpen} shortfall={creditsShortfall} />
+      </>
     );
   }
 
