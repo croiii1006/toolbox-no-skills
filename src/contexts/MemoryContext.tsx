@@ -13,7 +13,7 @@ export interface MemoryEntry {
 
 interface MemoryContextValue {
   entries: MemoryEntry[];
-  addEntry: (entry: Omit<MemoryEntry, 'id' | 'createdAt' | 'updatedAt'>) => void;
+  addEntry: (entry: Omit<MemoryEntry, 'id' | 'createdAt' | 'updatedAt'>) => boolean;
   updateEntry: (entry: MemoryEntry) => void;
   deleteEntry: (id: string) => void;
   importEntries: (data: MemoryEntry[]) => void;
