@@ -3,6 +3,8 @@ import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Download, FileText, AlertTriangle, TrendingUp, Users, Target, Shield, Zap, ChevronRight, ExternalLink, Database, History, X, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useCredits } from '@/contexts/CreditsContext';
+import { InsufficientCreditsDrawer } from '@/components/modules/InsufficientCreditsDrawer';
 import { useMemory } from '@/contexts/MemoryContext';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -110,6 +112,10 @@ interface BrandHealthProps {
 export function BrandHealth({ onNavigate }: BrandHealthProps) {
   const { i18n } = useTranslation();
   const { addEntry, setDrawerOpen } = useMemory();
+  const { canAfford, shortfall: getShortfall, deduct } = useCredits();
+  const [creditsDrawerOpen, setCreditsDrawerOpen] = useState(false);
+  const [creditsShortfall, setCreditsShortfall] = useState(0);
+  const REPORT_COST = 200;
   const isZh = i18n.language === 'zh';
   
   const [view, setView] = useState<'input' | 'loading' | 'report'>('input');
@@ -150,6 +156,14 @@ export function BrandHealth({ onNavigate }: BrandHealthProps) {
   };
 
   const handleGenerate = (payload: { brandName: string; category: string; competitors: string[] }) => {
+    // Credit check
+    if (!canAfford(REPORT_COST)) {
+      setCreditsShortfall(getShortfall(REPORT_COST));
+      setCreditsDrawerOpen(true);
+      return;
+    }
+    deduct(REPORT_COST);
+
     setFormData(payload);
     setIsLoading(true);
     setView('loading');
@@ -309,32 +323,38 @@ export function BrandHealth({ onNavigate }: BrandHealthProps) {
   // Loading View - reuse CampaignPlanner style
   if (view === 'loading') {
     return (
-      <div className="min-h-full flex items-center justify-center p-8">
-        <div className="text-center space-y-4 animate-fade-in">
-          <Loader2 className="w-8 h-8 text-accent animate-spin mx-auto" />
-          <h2 className="text-lg font-medium text-foreground">报告生成中</h2>
-          <p className="text-sm text-muted-foreground max-w-md">
-            正在为 <span className="text-foreground font-medium">{formData.brandName}</span> 生成洞察报告...
-          </p>
+      <>
+        <div className="min-h-full flex items-center justify-center p-8">
+          <div className="text-center space-y-4 animate-fade-in">
+            <Loader2 className="w-8 h-8 text-accent animate-spin mx-auto" />
+            <h2 className="text-lg font-medium text-foreground">报告生成中</h2>
+            <p className="text-sm text-muted-foreground max-w-md">
+              正在为 <span className="text-foreground font-medium">{formData.brandName}</span> 生成洞察报告...
+            </p>
+          </div>
         </div>
-      </div>
+        <InsufficientCreditsDrawer open={creditsDrawerOpen} onOpenChange={setCreditsDrawerOpen} shortfall={creditsShortfall} />
+      </>
     );
   }
 
   // Input Form View - Chat Composer
   if (view === 'input') {
     return (
-      <div className="relative h-full">
-        <div className="absolute top-4 right-4 z-20">
-          {historySheet}
+      <>
+        <div className="relative h-full">
+          <div className="absolute top-4 right-4 z-20">
+            {historySheet}
+          </div>
+          <MarketInsightComposer
+            key={historyKey}
+            onSubmit={handleGenerate}
+            disabled={isLoading}
+            initialData={historyLoadData ? { brandName: historyLoadData.brandName, category: historyLoadData.category, competitors: historyLoadData.competitors } : undefined}
+          />
         </div>
-        <MarketInsightComposer
-          key={historyKey}
-          onSubmit={handleGenerate}
-          disabled={isLoading}
-          initialData={historyLoadData ? { brandName: historyLoadData.brandName, category: historyLoadData.category, competitors: historyLoadData.competitors } : undefined}
-        />
-      </div>
+        <InsufficientCreditsDrawer open={creditsDrawerOpen} onOpenChange={setCreditsDrawerOpen} shortfall={creditsShortfall} />
+      </>
     );
   }
 

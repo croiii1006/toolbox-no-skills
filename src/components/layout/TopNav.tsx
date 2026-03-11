@@ -10,13 +10,15 @@ import { useMemory } from '@/contexts/MemoryContext';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { AccountDialog } from './AccountDialog';
 import { useState } from 'react';
-import { USER_CREDITS, USER_SUBSCRIPTION_CREDITS, USER_TOPUP_CREDITS, USER_NAME, USER_EMAIL, USER_INITIALS, USER_PLAN } from '@/constants/user';
+import { USER_NAME, USER_EMAIL, USER_INITIALS, USER_PLAN } from '@/constants/user';
+import { useCredits } from '@/contexts/CreditsContext';
 
 export function TopNav() {
   const { activeModule, setActiveModule } = useModule();
   const { t, i18n } = useTranslation();
   const { drawerOpen, setDrawerOpen } = useMemory();
   const [accountOpen, setAccountOpen] = useState(false);
+  const { credits, subscriptionCredits, topupCredits } = useCredits();
 
   const toggleLanguage = () => {
     const newLang = i18n.language === 'zh' ? 'en' : 'zh';
@@ -67,7 +69,7 @@ export function TopNav() {
               <span className="px-3 py-1.5">{t('common.upgrade')}</span>
               <span className="flex items-center gap-1 px-3 py-1.5 border-l border-border font-light bg-transparent">
                 <Zap className="w-3.5 h-3.5 fill-current" />
-                {USER_CREDITS}
+                {credits}
               </span>
             </a>
           </HoverCardTrigger>
@@ -90,15 +92,15 @@ export function TopNav() {
                     <Sparkles className="w-4 h-4" />
                     {t('common.credits')}
                   </div>
-                  <span className="text-sm font-light text-foreground">{USER_CREDITS}</span>
+                  <span className="text-sm font-light text-foreground tabular-nums">{credits}</span>
                 </div>
                 <div className="flex items-center justify-between pl-6">
                   <span className="text-xs text-muted-foreground">{t('common.subscriptionCredits')}</span>
-                  <span className="text-xs font-light text-foreground">{USER_SUBSCRIPTION_CREDITS}</span>
+                  <span className="text-xs font-light text-foreground tabular-nums">{subscriptionCredits}</span>
                 </div>
                 <div className="flex items-center justify-between pl-6">
                   <span className="text-xs text-muted-foreground">{t('common.topupCredits')}</span>
-                  <span className="text-xs font-light text-foreground">{USER_TOPUP_CREDITS}</span>
+                  <span className="text-xs font-light text-foreground tabular-nums">{topupCredits}</span>
                 </div>
               </div>
               
@@ -150,7 +152,7 @@ export function TopNav() {
                     onClick={() => setAccountOpen(true)}
                     className="flex items-center gap-1 text-sm font-light text-foreground hover:text-primary transition-colors">
                     
-                  {USER_CREDITS} <span className="text-muted-foreground">→</span>
+                  {credits} <span className="text-muted-foreground">→</span>
                 </button>
               </div>
             </div>

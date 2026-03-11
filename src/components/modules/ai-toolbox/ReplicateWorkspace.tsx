@@ -40,6 +40,8 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { useMemory } from '@/contexts/MemoryContext';
 import { MemorySelectionDialog } from '@/components/modules/memory/MemorySelectionDialog';
 import { Button } from '@/components/ui/button';
+import { useCredits } from '@/contexts/CreditsContext';
+import { InsufficientCreditsDrawer } from '@/components/modules/InsufficientCreditsDrawer';
 
 /* ─── Field Contract Types (DO NOT MODIFY) ─── */
 
@@ -131,7 +133,11 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
   const { savedVideos, unsaveVideo } = useTikTokInspiration();
   const { consumePrefill } = useReplicatePrefill();
   const { entries } = useMemory();
+  const { credits, deduct, canAfford, shortfall, refund } = useCredits();
 
+  /* ── Insufficient credits drawer ── */
+  const [creditsDrawerOpen, setCreditsDrawerOpen] = useState(false);
+  const [creditsShortfall, setCreditsShortfall] = useState(0);
   /* ── Memory ── */
   const [selectedMemoryIds, setSelectedMemoryIds] = useState<string[]>([]);
   const [memoryDialogOpen, setMemoryDialogOpen] = useState(false);
@@ -162,6 +168,17 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
   const canSend = hasVideoSource && sellingPoints.length > 0;
   const [isExtracting, setIsExtracting] = useState(false);
   const [viewMode, setViewMode] = useState<'composer' | 'conversation'>('composer');
+  const [lastDeductedAmount, setLastDeductedAmount] = useState(0);
+
+  /* ── Estimated cost helper ── */
+  const estimatedCost = useMemo(() => {
+    let cost = 0;
+    if (styleVideoFile || inspirationVideo) cost += 8;
+    if (productImageFile) cost += 2;
+    cost += sellingPoints.length;
+    cost += selectedMemoryIds.length;
+    return Math.max(cost, 0);
+  }, [styleVideoFile, inspirationVideo, productImageFile, sellingPoints, selectedMemoryIds]);
 
   /* ── Multi-step conversation state ── */
   type ConvStep = 'extracting' | 'extracted' | 'fusing' | 'fused' | 'replicating' | 'done';
@@ -288,6 +305,16 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
   const handleSend = useCallback(async () => {
     if (!canSend) return;
 
+    // Credit check
+    const cost = estimatedCost;
+    if (!canAfford(cost)) {
+      setCreditsShortfall(shortfall(cost));
+      setCreditsDrawerOpen(true);
+      return;
+    }
+    deduct(cost);
+    setLastDeductedAmount(cost);
+
     const mockPrompt = `产品特写镜头，柔和暖色灯光，缓慢推拉运镜，背景虚化，商品居中展示。\n\n核心卖点融入：${sellingPoints.join('、')}。\n\n电商广告风格，高清画质，节奏紧凑，适合 TikTok 短视频传播。`;
 
     // Save to history (with prompt)
@@ -334,7 +361,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
       setIsExtracting(false);
       return;
     }
-  }, [canSend, styleVideoFile, sellingPoints, settings, inspirationVideo, history, productImageFile]);
+  }, [canSend, styleVideoFile, sellingPoints, settings, inspirationVideo, history, productImageFile, estimatedCost, canAfford, shortfall, deduct]);
 
   const handleConfirmReplicate = useCallback(async () => {
     setConvStep('replicating');
@@ -351,9 +378,15 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
         saveReplicateHistory(updated);
         return updated;
       });
-      toast.success('复刻视频已完成');
+      toast.success('✅ 视频生成完毕！');
     } catch {
       setErrorInfo({ step: 'replicating', message: '视频生成失败，请检查网络后重试' });
+      // Refund credits on failure
+      if (lastDeductedAmount > 0) {
+        refund(lastDeductedAmount);
+        toast.error(`❌ 生成失败（触发安全策略/接口拥堵）。扣除的 ${lastDeductedAmount} credit 已全额解冻退回您的账户。`);
+        setLastDeductedAmount(0);
+      }
       // Update history status to failed
       setHistory(prev => {
         const updated = prev.map((h, i) => i === 0 ? { ...h, status: 'failed' as HistoryStatus } : h);
@@ -362,7 +395,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
       });
       setConvStep('fused');
     }
-  }, []);
+  }, [lastDeductedAmount, refund]);
 
   const addSellingPoint = (value: string) => {
     const trimmed = value.trim();
@@ -966,14 +999,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
             </div>
             <div className="flex items-center gap-3">
               <span className="text-xs text-muted-foreground/70 tabular-nums">
-                预计消耗：约 <span className="text-foreground/80 font-medium">{(() => {
-                  let cost = 0;
-                  if (styleVideoFile || inspirationVideo) cost += 8;
-                  if (productImageFile) cost += 2;
-                  cost += sellingPoints.length * 1;
-                  cost += selectedMemoryIds.length * 1;
-                  return Math.max(cost, 0);
-                })()}</span> credit
+                预计消耗：约 <span className="text-foreground/80 font-medium">{estimatedCost}</span> credit
               </span>
               <button
                   onClick={handleSend}
@@ -1051,6 +1077,11 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
         items={memoryItems}
         selectedIds={selectedMemoryIds}
         onToggle={toggleMemory}
+      />
+      <InsufficientCreditsDrawer
+        open={creditsDrawerOpen}
+        onOpenChange={setCreditsDrawerOpen}
+        shortfall={creditsShortfall}
       />
     </div>);
 

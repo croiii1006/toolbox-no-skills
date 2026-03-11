@@ -5,7 +5,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { LogOut } from 'lucide-react';
-import { USER_CREDITS, USER_SUBSCRIPTION_CREDITS, USER_TOPUP_CREDITS, USER_NAME, USER_EMAIL, USER_INITIALS, USER_PLAN } from '@/constants/user';
+import { USER_NAME, USER_EMAIL, USER_INITIALS, USER_PLAN } from '@/constants/user';
+import { useCredits } from '@/contexts/CreditsContext';
 
 interface AccountDialogProps {
   open: boolean;
@@ -15,7 +16,7 @@ interface AccountDialogProps {
 export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('account');
-
+  const { credits, subscriptionCredits, topupCredits } = useCredits();
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[900px] w-[90vw] h-[80vh] p-0 gap-0 overflow-hidden bg-background/70 backdrop-blur-xl border-border/50">
@@ -77,15 +78,15 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                   </div>
                   <div className="flex items-center">
                     <span className="text-muted-foreground w-40 font-light">{t('common.availableCredits')}</span>
-                    <span className="text-foreground font-normal">{USER_CREDITS}</span>
+                    <span className="text-foreground font-normal tabular-nums">{credits}</span>
                   </div>
                   <div className="flex items-center">
                     <span className="text-muted-foreground w-40 font-light pl-4">{t('common.subscriptionCredits')}</span>
-                    <span className="text-foreground font-light">{USER_SUBSCRIPTION_CREDITS}</span>
+                    <span className="text-foreground font-light tabular-nums">{subscriptionCredits}</span>
                   </div>
                   <div className="flex items-center">
                     <span className="text-muted-foreground w-40 font-light pl-4">{t('common.topupCredits')}</span>
-                    <span className="text-foreground font-light">{USER_TOPUP_CREDITS}</span>
+                    <span className="text-foreground font-light tabular-nums">{topupCredits}</span>
                   </div>
                 </div>
               </div>
@@ -104,7 +105,7 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                   <span className="flex-1 text-foreground">Daily Login Bonus</span>
                   <span className="w-32 text-center text-muted-foreground">已获取</span>
                   <span className="w-48 text-center text-muted-foreground">2026-03-11 11:27:02</span>
-                  <span className="w-32 text-right text-foreground">+{USER_CREDITS}</span>
+                  <span className="w-32 text-right text-foreground">+{credits}</span>
                 </div>
                 <div className="py-8 text-center text-muted-foreground text-sm">
                   暂无更多数据
