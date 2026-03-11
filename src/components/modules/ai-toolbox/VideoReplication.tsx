@@ -1295,6 +1295,13 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
         />
       </div>
 
+      <MemorySelectionDialog
+        open={memoryDialogOpen}
+        onOpenChange={setMemoryDialogOpen}
+        items={memoryItems}
+        selectedIds={selectedMemoryIds}
+        onToggle={toggleMemory}
+      />
     </div>
   );
 }
