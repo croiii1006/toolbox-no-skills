@@ -52,7 +52,7 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                   </Avatar>
                   <div>
                     <p className="text-base font-semibold text-foreground">John Doe</p>
-                    <p className="text-sm text-muted-foreground">john.doe@example.com</p>
+                    <p className="text-sm text-muted-foreground font-light">john.doe@example.com</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
