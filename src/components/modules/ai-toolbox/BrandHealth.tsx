@@ -164,6 +164,7 @@ export function BrandHealth({ onNavigate }: BrandHealthProps) {
     }
     deduct(REPORT_COST);
 
+    setFormData(payload);
     setIsLoading(true);
     setView('loading');
     const newId = crypto.randomUUID();
