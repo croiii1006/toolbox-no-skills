@@ -162,7 +162,7 @@ export function BrandHealth({ onNavigate }: BrandHealthProps) {
       setCreditsDrawerOpen(true);
       return;
     }
-    deduct(REPORT_COST);
+    deduct(REPORT_COST, '市场洞察报告');
 
     setFormData(payload);
     setIsLoading(true);

@@ -312,7 +312,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
       setCreditsDrawerOpen(true);
       return;
     }
-    deduct(cost);
+    deduct(cost, '视频复刻工作台');
     setLastDeductedAmount(cost);
 
     const mockPrompt = `产品特写镜头，柔和暖色灯光，缓慢推拉运镜，背景虚化，商品居中展示。\n\n核心卖点融入：${sellingPoints.join('、')}。\n\n电商广告风格，高清画质，节奏紧凑，适合 TikTok 短视频传播。`;

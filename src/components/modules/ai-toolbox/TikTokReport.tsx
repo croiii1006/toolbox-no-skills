@@ -110,7 +110,7 @@ export function TikTokReport({ onNavigate }: TikTokReportProps) {
       setCreditsDrawerOpen(true);
       return;
     }
-    deduct(REPORT_COST);
+    deduct(REPORT_COST, 'TikTok 爆款视频匹配');
 
     setCategory(payload.category);
     setSellingPoints(payload.sellingPoints);
