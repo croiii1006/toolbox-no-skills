@@ -684,6 +684,7 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
                 setSellingPoints('');
                 setSegments([]);
                 setSelectedSegments(new Set());
+                setSelectedMemoryIds([]);
                 setMessages([]);
                 setCanvasItems([]);
                 setGeneratedVideo(null);
