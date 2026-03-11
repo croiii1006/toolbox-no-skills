@@ -1078,6 +1078,11 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
         selectedIds={selectedMemoryIds}
         onToggle={toggleMemory}
       />
+      <InsufficientCreditsDrawer
+        open={creditsDrawerOpen}
+        onOpenChange={setCreditsDrawerOpen}
+        shortfall={creditsShortfall}
+      />
     </div>);
 
 }
