@@ -40,6 +40,8 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { useMemory } from '@/contexts/MemoryContext';
 import { MemorySelectionDialog } from '@/components/modules/memory/MemorySelectionDialog';
 import { Button } from '@/components/ui/button';
+import { useCredits } from '@/contexts/CreditsContext';
+import { InsufficientCreditsDrawer } from '@/components/modules/InsufficientCreditsDrawer';
 
 /* ─── Field Contract Types (DO NOT MODIFY) ─── */
 
