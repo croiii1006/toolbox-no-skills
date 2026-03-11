@@ -3,6 +3,8 @@ import { TikTokReportComposer } from './TikTokReportComposer';
 import { TikTokReportResults } from './TikTokReportResults';
 import { useTikTokInspiration } from '@/contexts/TikTokInspirationContext';
 import { useReplicatePrefill } from '@/contexts/ReplicatePrefillContext';
+import { useCredits } from '@/contexts/CreditsContext';
+import { InsufficientCreditsDrawer } from '@/components/modules/InsufficientCreditsDrawer';
 import { statusConfig } from '@/types/history';
 import { History, X, Loader2 } from 'lucide-react';
 import {
