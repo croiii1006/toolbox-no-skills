@@ -67,7 +67,7 @@ export function TopNav() {
               <span className="px-3 py-1.5">{t('common.upgrade')}</span>
               <span className="flex items-center gap-1 px-3 py-1.5 border-l border-border font-light bg-transparent">
                 <Zap className="w-3.5 h-3.5 fill-current" />
-                80
+                {USER_CREDITS}
               </span>
             </a>
           </HoverCardTrigger>
