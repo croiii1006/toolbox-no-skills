@@ -1,4 +1,4 @@
-import { Bell, ChevronDown, Globe, Database, Zap } from 'lucide-react';
+import { ChevronDown, Globe, Database, Zap } from 'lucide-react';
 import logoDark from '@/assets/logo_dark.svg';
 import { useModule } from '@/contexts/ModuleContext';
 import { MODULES, ModuleType } from '@/types/modules';

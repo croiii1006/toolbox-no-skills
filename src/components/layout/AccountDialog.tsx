@@ -4,7 +4,7 @@ import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { UserCog, LogOut } from 'lucide-react';
+import { LogOut } from 'lucide-react';
 
 interface AccountDialogProps {
   open: boolean;
