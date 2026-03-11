@@ -84,12 +84,22 @@ export function TopNav() {
               </div>
               <div className="border-t border-border" />
               {/* Credits */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Sparkles className="w-4 h-4" />
-                  {t('common.credits')}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Sparkles className="w-4 h-4" />
+                    {t('common.credits')}
+                  </div>
+                  <span className="text-sm font-light text-foreground">{USER_CREDITS}</span>
                 </div>
-                <span className="text-sm font-light text-foreground">{USER_CREDITS}</span>
+                <div className="flex items-center justify-between pl-6">
+                  <span className="text-xs text-muted-foreground">{t('common.subscriptionCredits')}</span>
+                  <span className="text-xs font-light text-foreground">{USER_SUBSCRIPTION_CREDITS}</span>
+                </div>
+                <div className="flex items-center justify-between pl-6">
+                  <span className="text-xs text-muted-foreground">{t('common.topupCredits')}</span>
+                  <span className="text-xs font-light text-foreground">{USER_TOPUP_CREDITS}</span>
+                </div>
               </div>
               
               {/* Usage Details */}
