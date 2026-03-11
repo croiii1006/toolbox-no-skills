@@ -105,7 +105,7 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                   <span className="flex-1 text-foreground">Daily Login Bonus</span>
                   <span className="w-32 text-center text-muted-foreground">已获取</span>
                   <span className="w-48 text-center text-muted-foreground">2026-03-11 11:27:02</span>
-                  <span className="w-32 text-right text-foreground">+{USER_CREDITS}</span>
+                  <span className="w-32 text-right text-foreground">+{credits}</span>
                 </div>
                 <div className="py-8 text-center text-muted-foreground text-sm">
                   暂无更多数据
