@@ -133,7 +133,11 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
   const { savedVideos, unsaveVideo } = useTikTokInspiration();
   const { consumePrefill } = useReplicatePrefill();
   const { entries } = useMemory();
+  const { credits, deduct, canAfford, shortfall, refund } = useCredits();
 
+  /* ── Insufficient credits drawer ── */
+  const [creditsDrawerOpen, setCreditsDrawerOpen] = useState(false);
+  const [creditsShortfall, setCreditsShortfall] = useState(0);
   /* ── Memory ── */
   const [selectedMemoryIds, setSelectedMemoryIds] = useState<string[]>([]);
   const [memoryDialogOpen, setMemoryDialogOpen] = useState(false);
