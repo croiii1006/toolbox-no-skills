@@ -134,6 +134,7 @@ export function BrandHealth({ onNavigate }: BrandHealthProps) {
     try {
       const raw = localStorage.getItem(HISTORY_KEY);
       return raw ? JSON.parse(raw) : [
+        { id: '0', brandName: 'NC IntimaPods', category: '美妆个护 > 个人清洁', competitors: ['Optibac'], date: '2025-03-10', status: 'completed' as HistoryStatus },
         { id: '1', brandName: 'AOS', category: '美妆个护 > 彩妆 > 口红', competitors: ['花西子', 'ColorKey'], date: '2024-01-15', status: 'completed' as HistoryStatus },
         { id: '2', brandName: 'SHEIN', category: '服饰鞋包 > 女装 > 连衣裙', competitors: ['ZARA', 'H&M', 'Uniqlo'], date: '2024-01-10', status: 'completed' as HistoryStatus },
       ];
@@ -358,7 +359,41 @@ export function BrandHealth({ onNavigate }: BrandHealthProps) {
     );
   }
 
+  // Check if this is the NC IntimaPods mock report
+  const isIntimaPodsMock = formData.brandName.trim().toLowerCase() === 'nc intimapods';
+
   // Report Dashboard View
+  if (isIntimaPodsMock) {
+    return (
+      <>
+        <div className="h-[calc(100vh-4rem)] flex flex-col animate-fade-in">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-border/30 bg-background/80 backdrop-blur-sm shrink-0">
+            <Button variant="ghost" onClick={handleBack} className="gap-2 text-muted-foreground hover:text-foreground">
+              <ArrowLeft className="h-4 w-4" />
+              {isZh ? '返回重新生成' : 'Back to Regenerate'}
+            </Button>
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" className="gap-2" onClick={handleCopyToMemory}>
+                <Database className="h-4 w-4" />
+                {isZh ? '复制到记忆库' : 'Copy to Memory'}
+              </Button>
+              <Button variant="outline" size="sm" className="gap-2" onClick={() => window.open('/reports/IntimaPods.html', '_blank')}>
+                <ExternalLink className="h-4 w-4" />
+                {isZh ? '新窗口打开' : 'Open in New Tab'}
+              </Button>
+            </div>
+          </div>
+          <iframe
+            src="/reports/IntimaPods.html"
+            className="flex-1 w-full border-0"
+            title="NC IntimaPods 市场洞察报告"
+          />
+        </div>
+        <InsufficientCreditsDrawer open={creditsDrawerOpen} onOpenChange={setCreditsDrawerOpen} shortfall={creditsShortfall} />
+      </>
+    );
+  }
+
   return (
     <ScrollArea className="h-[calc(100vh-4rem)]">
       <div className="min-h-full bg-muted/30 p-4 md:p-6">
