@@ -361,7 +361,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
       setIsExtracting(false);
       return;
     }
-  }, [canSend, styleVideoFile, sellingPoints, settings, inspirationVideo, history, productImageFile]);
+  }, [canSend, styleVideoFile, sellingPoints, settings, inspirationVideo, history, productImageFile, estimatedCost, canAfford, shortfall, deduct]);
 
   const handleConfirmReplicate = useCallback(async () => {
     setConvStep('replicating');
@@ -378,9 +378,15 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
         saveReplicateHistory(updated);
         return updated;
       });
-      toast.success('复刻视频已完成');
+      toast.success('✅ 视频生成完毕！');
     } catch {
       setErrorInfo({ step: 'replicating', message: '视频生成失败，请检查网络后重试' });
+      // Refund credits on failure
+      if (lastDeductedAmount > 0) {
+        refund(lastDeductedAmount);
+        toast.error(`❌ 生成失败（触发安全策略/接口拥堵）。扣除的 ${lastDeductedAmount} credit 已全额解冻退回您的账户。`);
+        setLastDeductedAmount(0);
+      }
       // Update history status to failed
       setHistory(prev => {
         const updated = prev.map((h, i) => i === 0 ? { ...h, status: 'failed' as HistoryStatus } : h);
@@ -389,7 +395,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
       });
       setConvStep('fused');
     }
-  }, []);
+  }, [lastDeductedAmount, refund]);
 
   const addSellingPoint = (value: string) => {
     const trimmed = value.trim();
