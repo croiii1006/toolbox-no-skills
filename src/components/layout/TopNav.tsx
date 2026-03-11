@@ -96,7 +96,7 @@ export function TopNav() {
                 </div>
                 <div className="flex items-center justify-between pl-6">
                   <span className="text-xs text-muted-foreground">{t('common.subscriptionCredits')}</span>
-                  <span className="text-xs font-light text-foreground">{USER_SUBSCRIPTION_CREDITS}</span>
+                  <span className="text-xs font-light text-foreground tabular-nums">{subscriptionCredits}</span>
                 </div>
                 <div className="flex items-center justify-between pl-6">
                   <span className="text-xs text-muted-foreground">{t('common.topupCredits')}</span>
