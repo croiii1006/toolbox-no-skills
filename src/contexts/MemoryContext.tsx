@@ -68,8 +68,17 @@ export function MemoryProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const importEntries = useCallback((data: MemoryEntry[]) => {
-    setEntries(prev => [...prev, ...data.map(d => ({ ...d, id: crypto.randomUUID() }))]);
-  }, []);
+    const existingTitles = new Set(entries.map(e => e.title.trim()));
+    const unique = data.filter(d => !existingTitles.has(d.title.trim()));
+    const skipped = data.length - unique.length;
+    if (skipped > 0) {
+      toast.warning(`已跳过 ${skipped} 条重复标题的记忆条目`);
+    }
+    if (unique.length > 0) {
+      setEntries(prev => [...prev, ...unique.map(d => ({ ...d, id: crypto.randomUUID() }))]);
+      toast.success(`已导入 ${unique.length} 条记忆条目`);
+    }
+  }, [entries]);
 
   return (
     <MemoryContext.Provider value={{ entries, addEntry, updateEntry, deleteEntry, importEntries, drawerOpen, setDrawerOpen }}>

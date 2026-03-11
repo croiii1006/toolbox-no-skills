@@ -258,13 +258,13 @@ export function BrandHealth({ onNavigate }: BrandHealthProps) {
 | 第5-8周 | 品牌词霸屏策略 | 直播带货测试 | 复购激励计划 |
 `;
 
-    addEntry({
+    const added = addEntry({
       title: `${formData.brandName} 品牌健康度报告`,
       content: md,
       category: 'brand',
       tags: ['市场洞察', '品牌分析', formData.brandName],
     });
-    setDrawerOpen(true);
+    if (added) setDrawerOpen(true);
   };
 
   const historySheet = (
