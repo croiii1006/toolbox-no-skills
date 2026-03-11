@@ -1,6 +1,6 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { AlertTriangle, Rocket } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 
 interface InsufficientCreditsDrawerProps {
   open: boolean;
