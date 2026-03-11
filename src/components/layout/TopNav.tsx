@@ -58,11 +58,11 @@ export function TopNav() {
         <HoverCard openDelay={200} closeDelay={300}>
           <HoverCardTrigger asChild>
             <a
-              href="https://www.oran.cn/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-0 rounded-full bg-foreground text-background text-xs font-semibold overflow-hidden h-8 hover:opacity-90 transition-opacity"
-            >
+                href="https://www.oran.cn/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-0 rounded-full bg-foreground text-background text-xs font-semibold overflow-hidden h-8 hover:opacity-90 transition-opacity">
+                
               <span className="px-3 py-1.5">{t('common.upgrade')}</span>
               <span className="flex items-center gap-1 px-3 py-1.5 bg-foreground/80 border-l border-background/20">
                 <Zap className="w-3.5 h-3.5 fill-current" />
@@ -90,12 +90,12 @@ export function TopNav() {
                 </div>
                 <span className="text-sm font-semibold text-foreground">0</span>
               </div>
-              <div className="border-t border-border" />
+              
               {/* Usage Details */}
               <button
-                onClick={() => setAccountOpen(true)}
-                className="flex items-center gap-1 text-sm font-semibold text-foreground hover:text-primary transition-colors"
-              >
+                  onClick={() => setAccountOpen(true)}
+                  className="flex items-center gap-1 text-sm font-semibold text-foreground hover:text-primary transition-colors">
+                  
                 {t('common.usageDetails')} <span>›</span>
               </button>
             </div>
@@ -125,10 +125,10 @@ export function TopNav() {
                 <p className="text-xs text-muted-foreground truncate max-w-[200px]">john.doe@example.com</p>
               </div>
               <Button
-                size="sm"
-                className="rounded-lg bg-foreground text-background hover:bg-foreground/90 text-xs font-semibold px-5"
-                asChild
-              >
+                  size="sm"
+                  className="rounded-lg bg-foreground text-background hover:bg-foreground/90 text-xs font-semibold px-5"
+                  asChild>
+                  
                 <a href="https://www.oran.cn/" target="_blank" rel="noopener noreferrer">
                   {t('common.upgrade')}
                 </a>
@@ -136,9 +136,9 @@ export function TopNav() {
               <div className="w-full flex items-center justify-between pt-2 border-t border-border">
                 <span className="text-sm text-muted-foreground">{t('common.credits')}</span>
                 <button
-                  onClick={() => setAccountOpen(true)}
-                  className="flex items-center gap-1 text-sm font-semibold text-foreground hover:text-primary transition-colors"
-                >
+                    onClick={() => setAccountOpen(true)}
+                    className="flex items-center gap-1 text-sm font-semibold text-foreground hover:text-primary transition-colors">
+                    
                   80 <span className="text-muted-foreground">→</span>
                 </button>
               </div>
@@ -149,6 +149,6 @@ export function TopNav() {
     </header>
     <MemoryLibraryDrawer open={drawerOpen} onOpenChange={setDrawerOpen} />
     <AccountDialog open={accountOpen} onOpenChange={setAccountOpen} />
-    </>
-  );
+    </>);
+
 }
