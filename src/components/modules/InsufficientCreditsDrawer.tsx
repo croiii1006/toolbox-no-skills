@@ -22,7 +22,7 @@ export function InsufficientCreditsDrawer({ open, onOpenChange, shortfall }: Ins
           </DialogHeader>
 
           <div className="space-y-5">
-            <p className="text-sm text-muted-foreground font-light">
+            <p className="text-sm text-muted-foreground font-light ml-[31px]">
               ⚠️ 算力储量不足 (缺口: <span className="font-semibold text-foreground tabular-nums">{shortfall}</span> credit)
             </p>
 
