@@ -107,7 +107,7 @@ export function TopNav() {
           <HoverCardTrigger asChild>
             <button className="rounded-full focus:outline-none">
               <Avatar className="w-8 h-8 cursor-pointer hover:ring-2 hover:ring-primary/50 transition-all">
-                <AvatarFallback className="bg-primary text-primary-foreground text-xs font-semibold">
+                <AvatarFallback className="bg-primary text-primary-foreground text-xs font-light">
                   JD
                 </AvatarFallback>
               </Avatar>
@@ -116,12 +116,12 @@ export function TopNav() {
           <HoverCardContent align="end" className="w-72 p-4 rounded-2xl">
             <div className="flex flex-col items-center gap-3">
               <Avatar className="w-14 h-14">
-                <AvatarFallback className="bg-primary text-primary-foreground text-lg font-semibold">
+                <AvatarFallback className="bg-primary text-primary-foreground text-lg font-light">
                   JD
                 </AvatarFallback>
               </Avatar>
               <div className="text-center">
-                <p className="text-sm font-semibold text-foreground">John Doe</p>
+                <p className="text-sm font-light text-foreground">John Doe</p>
                 <p className="text-xs text-muted-foreground truncate max-w-[200px]">john.doe@example.com</p>
               </div>
               <Button
