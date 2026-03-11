@@ -152,7 +152,7 @@ export function TopNav() {
                     onClick={() => setAccountOpen(true)}
                     className="flex items-center gap-1 text-sm font-light text-foreground hover:text-primary transition-colors">
                     
-                  {USER_CREDITS} <span className="text-muted-foreground">→</span>
+                  {credits} <span className="text-muted-foreground">→</span>
                 </button>
               </div>
             </div>
