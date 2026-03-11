@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 import { 
   Send, 
   Upload, 
@@ -16,6 +16,7 @@ import {
   History,
   Trash2,
   RotateCcw,
+  Database,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -36,6 +37,8 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { InfiniteCanvas } from './InfiniteCanvas';
+import { useMemory } from '@/contexts/MemoryContext';
+import { MemorySelectionDialog } from '@/components/modules/memory/MemorySelectionDialog';
 
 interface VideoReplicationProps {
   onNavigate?: (itemId: string) => void;
@@ -101,6 +104,17 @@ interface ProjectHistoryItem {
 const HISTORY_STORAGE_KEY = 'video-replication-history';
 
 export function VideoReplication({ onNavigate }: VideoReplicationProps) {
+  // Memory
+  const { entries } = useMemory();
+  const memoryItems = useMemo(() => entries.map((e) => ({
+    id: e.id, name: e.title, desc: e.content.slice(0, 60), tag: e.category, charCount: e.content.length
+  })), [entries]);
+  const [selectedMemoryIds, setSelectedMemoryIds] = useState<string[]>([]);
+  const [memoryDialogOpen, setMemoryDialogOpen] = useState(false);
+  const toggleMemory = (id: string) => {
+    setSelectedMemoryIds((prev) => prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]);
+  };
+
   // View state
   const [viewState, setViewState] = useState<ViewState>('upload');
   
@@ -212,6 +226,7 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
     })));
     setSellingPoints(item.sellingPoints);
     setSelectedSegments(new Set());
+    setSelectedMemoryIds([]);
     setCanvasItems([]);
     setGeneratedVideo(null);
     // Note: We can't restore actual video/image files (blob URLs are not persistent)
@@ -670,6 +685,7 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
                 setSellingPoints('');
                 setSegments([]);
                 setSelectedSegments(new Set());
+                setSelectedMemoryIds([]);
                 setMessages([]);
                 setCanvasItems([]);
                 setGeneratedVideo(null);
@@ -877,6 +893,30 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
                 className="min-h-[100px] resize-none"
               />
             </div>
+
+            {/* Memory Library Button */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setMemoryDialogOpen(true)}
+                className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-muted/30 text-muted-foreground/60 hover:bg-foreground/5 hover:text-muted-foreground transition-colors">
+                <Database className="w-3 h-3" />
+                <span className="text-[11px]">记忆库{selectedMemoryIds.length > 0 ? ` (${selectedMemoryIds.length})` : ''}</span>
+              </button>
+            </div>
+
+            {/* Selected Memory Tags */}
+            {selectedMemoryIds.length > 0 && (
+              <div className="flex flex-wrap gap-1.5">
+                {selectedMemoryIds.map((id) => {
+                  const item = memoryItems.find((m) => m.id === id);
+                  return item ? (
+                    <span key={id} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[11px]">
+                      {item.name}
+                    </span>
+                  ) : null;
+                })}
+              </div>
+            )}
 
             {/* Analyze Button */}
             {originalVideo && referenceImage && sellingPoints.trim() && (
@@ -1255,6 +1295,13 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
         />
       </div>
 
+      <MemorySelectionDialog
+        open={memoryDialogOpen}
+        onOpenChange={setMemoryDialogOpen}
+        items={memoryItems}
+        selectedIds={selectedMemoryIds}
+        onToggle={toggleMemory}
+      />
     </div>
   );
 }
