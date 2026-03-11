@@ -226,6 +226,7 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
     })));
     setSellingPoints(item.sellingPoints);
     setSelectedSegments(new Set());
+    setSelectedMemoryIds([]);
     setCanvasItems([]);
     setGeneratedVideo(null);
     // Note: We can't restore actual video/image files (blob URLs are not persistent)
