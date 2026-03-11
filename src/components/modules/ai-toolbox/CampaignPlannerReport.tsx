@@ -159,25 +159,13 @@ ${payload.sellingPoints.map((sp, i) => `### ${sp}（优先级：${i === 0 ? '最
 
   return (
     <div className="min-h-full bg-muted/30">
-      {/* Header */}
+      {/* External Toolbar */}
       <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b border-border/20">
-        <div className="px-6 py-4 max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" onClick={onBack} className="shrink-0">
-              <ArrowLeft className="w-4 h-4" />
-            </Button>
-            <div>
-              <h1 className="text-lg font-medium text-foreground">{payload.brandName} · {payload.goal}策划方案</h1>
-              <div className="flex items-center gap-2 mt-0.5 flex-wrap">
-                {payload.audience.map(a => (
-                  <span key={a} className="text-[10px] bg-accent/10 text-accent px-1.5 py-0.5 rounded-full">{a}</span>
-                ))}
-                {payload.budget && (
-                  <span className="text-[10px] bg-muted/40 text-muted-foreground px-1.5 py-0.5 rounded-full">{payload.budget}</span>
-                )}
-              </div>
-            </div>
-          </div>
+        <div className="px-6 py-3 max-w-7xl mx-auto flex items-center justify-between">
+          <Button variant="ghost" size="sm" onClick={onBack} className="gap-1.5 text-xs">
+            <ArrowLeft className="w-3.5 h-3.5" />
+            返回
+          </Button>
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" className="gap-1.5 text-xs" onClick={handleCopyToMemory}>
               <Database className="w-3.5 h-3.5" />
@@ -199,6 +187,7 @@ ${payload.sellingPoints.map((sp, i) => `### ${sp}（优先级：${i === 0 ? '最
         </div>
       </div>
 
+      {/* Pure Report Content */}
       <div id="campaign-planner-report" className="px-6 py-6 max-w-7xl mx-auto space-y-6 animate-fade-in">
         {/* Section 0: Executive Summary */}
         <div className="grid gap-6 lg:grid-cols-2">
