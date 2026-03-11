@@ -323,15 +323,18 @@ export function BrandHealth({ onNavigate }: BrandHealthProps) {
   // Loading View - reuse CampaignPlanner style
   if (view === 'loading') {
     return (
-      <div className="min-h-full flex items-center justify-center p-8">
-        <div className="text-center space-y-4 animate-fade-in">
-          <Loader2 className="w-8 h-8 text-accent animate-spin mx-auto" />
-          <h2 className="text-lg font-medium text-foreground">报告生成中</h2>
-          <p className="text-sm text-muted-foreground max-w-md">
-            正在为 <span className="text-foreground font-medium">{formData.brandName}</span> 生成洞察报告...
-          </p>
+      <>
+        <div className="min-h-full flex items-center justify-center p-8">
+          <div className="text-center space-y-4 animate-fade-in">
+            <Loader2 className="w-8 h-8 text-accent animate-spin mx-auto" />
+            <h2 className="text-lg font-medium text-foreground">报告生成中</h2>
+            <p className="text-sm text-muted-foreground max-w-md">
+              正在为 <span className="text-foreground font-medium">{formData.brandName}</span> 生成洞察报告...
+            </p>
+          </div>
         </div>
-      </div>
+        <InsufficientCreditsDrawer open={creditsDrawerOpen} onOpenChange={setCreditsDrawerOpen} shortfall={creditsShortfall} />
+      </>
     );
   }
 
