@@ -229,6 +229,11 @@ export function TikTokReport({ onNavigate }: TikTokReportProps) {
         {historySheet}
       </div>
       <TikTokReportComposer onSubmit={handleSubmit} />
+      <InsufficientCreditsDrawer
+        open={creditsDrawerOpen}
+        onOpenChange={setCreditsDrawerOpen}
+        shortfall={creditsShortfall}
+      />
     </div>
   );
 }
