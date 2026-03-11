@@ -97,8 +97,21 @@ export function TikTokReport({ onNavigate }: TikTokReportProps) {
   const [sellingPoints, setSellingPoints] = useState<string[]>([]);
   const { reportHistory, addReportHistory, updateReportHistoryStatus, deleteReportHistory } = useTikTokInspiration();
   const { setPrefill } = useReplicatePrefill();
+  const { canAfford, shortfall, deduct } = useCredits();
+  const [creditsDrawerOpen, setCreditsDrawerOpen] = useState(false);
+  const [creditsShortfall, setCreditsShortfall] = useState(0);
+
+  const REPORT_COST = 200;
 
   const handleSubmit = (payload: { category: string; sellingPoints: string[] }) => {
+    // Credit check
+    if (!canAfford(REPORT_COST)) {
+      setCreditsShortfall(shortfall(REPORT_COST));
+      setCreditsDrawerOpen(true);
+      return;
+    }
+    deduct(REPORT_COST);
+
     setCategory(payload.category);
     setSellingPoints(payload.sellingPoints);
     setPhase('loading');
