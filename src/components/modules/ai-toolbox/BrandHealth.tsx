@@ -134,6 +134,7 @@ export function BrandHealth({ onNavigate }: BrandHealthProps) {
     try {
       const raw = localStorage.getItem(HISTORY_KEY);
       return raw ? JSON.parse(raw) : [
+        { id: '0', brandName: 'NC IntimaPods', category: '美妆个护 > 个人清洁', competitors: ['Optibac'], date: '2025-03-10', status: 'completed' as HistoryStatus },
         { id: '1', brandName: 'AOS', category: '美妆个护 > 彩妆 > 口红', competitors: ['花西子', 'ColorKey'], date: '2024-01-15', status: 'completed' as HistoryStatus },
         { id: '2', brandName: 'SHEIN', category: '服饰鞋包 > 女装 > 连衣裙', competitors: ['ZARA', 'H&M', 'Uniqlo'], date: '2024-01-10', status: 'completed' as HistoryStatus },
       ];
