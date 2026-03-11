@@ -126,7 +126,7 @@ export function TopNav() {
               </div>
               <Button
                   size="sm"
-                  className="rounded-lg bg-foreground text-background hover:bg-foreground/90 text-xs font-semibold px-5"
+                  className="rounded-lg bg-foreground text-background hover:bg-foreground/90 text-xs font-light px-5"
                   asChild>
                   
                 <a href="https://www.oran.cn/" target="_blank" rel="noopener noreferrer" className="font-light">
