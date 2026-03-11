@@ -75,7 +75,7 @@ export function TopNav() {
             <div className="space-y-4">
               {/* Plan + Upgrade */}
               <div className="flex items-center justify-between">
-                <span className="text-lg font-light text-foreground">Free</span>
+                <span className="text-lg font-light text-foreground">{USER_PLAN}</span>
                 <Button size="sm" className="rounded-lg bg-foreground text-background hover:bg-foreground/90 text-xs font-light px-4" asChild>
                   <a href="https://www.oran.cn/" target="_blank" rel="noopener noreferrer" className="font-light">
                     {t('common.upgrade')}
