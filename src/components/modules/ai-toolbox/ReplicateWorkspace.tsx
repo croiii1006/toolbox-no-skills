@@ -383,7 +383,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
       setErrorInfo({ step: 'replicating', message: '视频生成失败，请检查网络后重试' });
       // Refund credits on failure
       if (lastDeductedAmount > 0) {
-        refund(lastDeductedAmount);
+        refund(lastDeductedAmount, '视频复刻退款');
         toast.error(`❌ 生成失败（触发安全策略/接口拥堵）。扣除的 ${lastDeductedAmount} credit 已全额解冻退回您的账户。`);
         setLastDeductedAmount(0);
       }
