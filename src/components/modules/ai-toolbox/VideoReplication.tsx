@@ -104,6 +104,17 @@ interface ProjectHistoryItem {
 const HISTORY_STORAGE_KEY = 'video-replication-history';
 
 export function VideoReplication({ onNavigate }: VideoReplicationProps) {
+  // Memory
+  const { entries } = useMemory();
+  const memoryItems = useMemo(() => entries.map((e) => ({
+    id: e.id, name: e.title, desc: e.content.slice(0, 60), tag: e.category, charCount: e.content.length
+  })), [entries]);
+  const [selectedMemoryIds, setSelectedMemoryIds] = useState<string[]>([]);
+  const [memoryDialogOpen, setMemoryDialogOpen] = useState(false);
+  const toggleMemory = (id: string) => {
+    setSelectedMemoryIds((prev) => prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]);
+  };
+
   // View state
   const [viewState, setViewState] = useState<ViewState>('upload');
   
