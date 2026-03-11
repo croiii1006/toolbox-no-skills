@@ -92,7 +92,7 @@ export function TopNav() {
                     <Sparkles className="w-4 h-4" />
                     {t('common.credits')}
                   </div>
-                  <span className="text-sm font-light text-foreground">{USER_CREDITS}</span>
+                  <span className="text-sm font-light text-foreground tabular-nums">{credits}</span>
                 </div>
                 <div className="flex items-center justify-between pl-6">
                   <span className="text-xs text-muted-foreground">{t('common.subscriptionCredits')}</span>
