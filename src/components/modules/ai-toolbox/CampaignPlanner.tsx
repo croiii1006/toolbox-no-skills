@@ -36,8 +36,18 @@ export function CampaignPlanner() {
   const [history, setHistory] = useState<HistoryItem[]>(loadHistory);
   const [initialData, setInitialData] = useState<CampaignPayload | undefined>();
   const [composerKey, setComposerKey] = useState(0);
+  const [creditsDrawerOpen, setCreditsDrawerOpen] = useState(false);
+  const [creditsShortfall, setCreditsShortfall] = useState(0);
+  const { deduct, canAfford, shortfall } = useCredits();
 
   const handleSubmit = (data: CampaignPayload) => {
+    if (!canAfford(REPORT_COST)) {
+      setCreditsShortfall(shortfall(REPORT_COST));
+      setCreditsDrawerOpen(true);
+      return;
+    }
+    deduct(REPORT_COST, '策划方案');
+
     setPayload(data);
     const newItem: HistoryItem = { id: crypto.randomUUID(), payload: data, date: new Date().toISOString(), status: 'in_progress' };
     const updated = [newItem, ...history].slice(0, 20);
@@ -45,7 +55,6 @@ export function CampaignPlanner() {
     saveHistory(updated);
     setView('loading');
     setTimeout(() => {
-      // Update status to completed
       const completed = updated.map(h => h.id === newItem.id ? { ...h, status: 'completed' as HistoryStatus } : h);
       setHistory(completed);
       saveHistory(completed);
