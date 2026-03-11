@@ -999,14 +999,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
             </div>
             <div className="flex items-center gap-3">
               <span className="text-xs text-muted-foreground/70 tabular-nums">
-                预计消耗：约 <span className="text-foreground/80 font-medium">{(() => {
-                  let cost = 0;
-                  if (styleVideoFile || inspirationVideo) cost += 8;
-                  if (productImageFile) cost += 2;
-                  cost += sellingPoints.length * 1;
-                  cost += selectedMemoryIds.length * 1;
-                  return Math.max(cost, 0);
-                })()}</span> credit
+                预计消耗：约 <span className="text-foreground/80 font-medium">{estimatedCost}</span> credit
               </span>
               <button
                   onClick={handleSend}
