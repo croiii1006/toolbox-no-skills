@@ -28,22 +28,20 @@ export function InsufficientCreditsDrawer({ open, onOpenChange, shortfall }: Ins
             <Button
               className="w-full justify-center gap-2 rounded-xl"
               variant="outline"
-              onClick={() => {
-                window.open('https://www.oran.cn/', '_blank');
-                onOpenChange(false);
-              }}
+              asChild
             >
-              快捷充值 $5 (45 credit)
+              <a href="https://www.oran.cn/" target="_blank" rel="noopener noreferrer">
+                快捷充值
+              </a>
             </Button>
             <Button
               className="w-full justify-center gap-2 rounded-xl"
-              onClick={() => {
-                window.open('https://www.oran.cn/', '_blank');
-                onOpenChange(false);
-              }}
+              asChild
             >
-              <Rocket className="w-4 h-4" />
-              升级 Pro 套餐 (最划算)
+              <a href="https://www.oran.cn/" target="_blank" rel="noopener noreferrer">
+                <Rocket className="w-4 h-4" />
+                升级 Pro 套餐 (最划算)
+              </a>
             </Button>
           </div>
         </div>
