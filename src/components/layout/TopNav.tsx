@@ -122,8 +122,8 @@ export function TopNav() {
                 </AvatarFallback>
               </Avatar>
               <div className="text-center">
-                <p className="text-sm font-light text-foreground">John Doe</p>
-                <p className="text-xs text-muted-foreground truncate max-w-[200px]">john.doe@example.com</p>
+                <p className="text-sm font-light text-foreground">{USER_NAME}</p>
+                <p className="text-xs text-muted-foreground truncate max-w-[200px]">{USER_EMAIL}</p>
               </div>
               <Button
                   size="sm"
