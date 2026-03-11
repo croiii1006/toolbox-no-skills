@@ -152,6 +152,7 @@ export function CampaignPlanner() {
         {historySheet}
       </div>
       <CampaignPlannerComposer key={composerKey} onSubmit={handleSubmit} initialData={initialData} />
+      <InsufficientCreditsDrawer open={creditsDrawerOpen} onOpenChange={setCreditsDrawerOpen} shortfall={creditsShortfall} />
     </div>
   );
 }
