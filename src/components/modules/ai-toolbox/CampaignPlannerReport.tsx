@@ -111,13 +111,13 @@ ${payload.sellingPoints.map((sp, i) => `### ${sp}（优先级：${i === 0 ? '最
 | 竞品截流风险 | 🟡 中 | 持续监控竞品动态，预留10%预算做防御性投放 |
 `;
 
-    addEntry({
+    const added = addEntry({
       title: `${payload.brandName} · ${payload.goal}策划方案`,
       content: md,
       category: 'strategy',
       tags: ['策划方案', payload.goal, payload.brandName],
     });
-    setDrawerOpen(true);
+    if (added) setDrawerOpen(true);
   };
   const phases = [
     {
