@@ -109,7 +109,7 @@ export function TopNav() {
             <button className="rounded-full focus:outline-none">
               <Avatar className="w-8 h-8 cursor-pointer hover:ring-2 hover:ring-primary/50 transition-all">
                 <AvatarFallback className="bg-primary text-primary-foreground text-xs font-light">
-                  JD
+                  {USER_INITIALS}
                 </AvatarFallback>
               </Avatar>
             </button>
