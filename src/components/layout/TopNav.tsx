@@ -10,7 +10,8 @@ import { useMemory } from '@/contexts/MemoryContext';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { AccountDialog } from './AccountDialog';
 import { useState } from 'react';
-import { USER_CREDITS, USER_SUBSCRIPTION_CREDITS, USER_TOPUP_CREDITS, USER_NAME, USER_EMAIL, USER_INITIALS, USER_PLAN } from '@/constants/user';
+import { USER_NAME, USER_EMAIL, USER_INITIALS, USER_PLAN } from '@/constants/user';
+import { useCredits } from '@/contexts/CreditsContext';
 
 export function TopNav() {
   const { activeModule, setActiveModule } = useModule();
