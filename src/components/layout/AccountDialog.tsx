@@ -78,14 +78,6 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                     <span className="text-muted-foreground w-40">{t('common.availableCredits')}</span>
                     <span className="text-foreground">80</span>
                   </div>
-                  <div className="flex items-center">
-                    <span className="text-muted-foreground w-40 pl-3">• {t('common.monthlyCredits')}</span>
-                    <span className="text-foreground">0</span>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-muted-foreground w-40 pl-3">• {t('common.dailyCredits')}</span>
-                    <span className="text-foreground">80</span>
-                  </div>
                 </div>
               </div>
             </TabsContent>
