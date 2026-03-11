@@ -312,7 +312,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
       setCreditsDrawerOpen(true);
       return;
     }
-    deduct(cost);
+    deduct(cost, '视频复刻工作台');
     setLastDeductedAmount(cost);
 
     const mockPrompt = `产品特写镜头，柔和暖色灯光，缓慢推拉运镜，背景虚化，商品居中展示。\n\n核心卖点融入：${sellingPoints.join('、')}。\n\n电商广告风格，高清画质，节奏紧凑，适合 TikTok 短视频传播。`;
@@ -383,7 +383,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
       setErrorInfo({ step: 'replicating', message: '视频生成失败，请检查网络后重试' });
       // Refund credits on failure
       if (lastDeductedAmount > 0) {
-        refund(lastDeductedAmount);
+        refund(lastDeductedAmount, '视频复刻退款');
         toast.error(`❌ 生成失败（触发安全策略/接口拥堵）。扣除的 ${lastDeductedAmount} credit 已全额解冻退回您的账户。`);
         setLastDeductedAmount(0);
       }

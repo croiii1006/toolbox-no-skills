@@ -16,7 +16,7 @@ interface AccountDialogProps {
 export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('account');
-  const { credits, subscriptionCredits, topupCredits } = useCredits();
+  const { credits, subscriptionCredits, topupCredits, usageHistory } = useCredits();
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[900px] w-[90vw] h-[80vh] p-0 gap-0 overflow-hidden bg-background/70 backdrop-blur-xl border-border/50">
@@ -26,19 +26,16 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
               <TabsTrigger
                 value="account"
                 className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:shadow-none px-1 pb-3 text-base font-normal">
-                
                 {t('common.accountManagement')}
               </TabsTrigger>
               <TabsTrigger
                 value="usage"
                 className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:shadow-none px-1 pb-3 text-base font-normal text-muted-foreground">
-                
                 {t('common.usage')}
               </TabsTrigger>
               <TabsTrigger
                 value="invoices"
                 className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:shadow-none px-1 pb-3 text-base font-normal text-muted-foreground">
-                
                 {t('common.invoices')}
               </TabsTrigger>
             </TabsList>
@@ -101,15 +98,25 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                   <span className="w-48 text-center">日期</span>
                   <span className="w-32 text-right">{t('common.credits')}</span>
                 </div>
-                <div className="px-6 py-4 flex items-center text-sm border-t border-border">
-                  <span className="flex-1 text-foreground">Daily Login Bonus</span>
-                  <span className="w-32 text-center text-muted-foreground">已获取</span>
-                  <span className="w-48 text-center text-muted-foreground">2026-03-11 11:27:02</span>
-                  <span className="w-32 text-right text-foreground">+{credits}</span>
-                </div>
-                <div className="py-8 text-center text-muted-foreground text-sm">
-                  暂无更多数据
-                </div>
+                {usageHistory.map(record => (
+                  <div key={record.id} className="px-6 py-4 flex items-center text-sm border-t border-border">
+                    <span className="flex-1 text-foreground">{record.label}</span>
+                    <span className={`w-32 text-center ${record.status === '已消耗' ? 'text-destructive' : record.status === '已退还' ? 'text-accent' : 'text-muted-foreground'}`}>
+                      {record.status}
+                    </span>
+                    <span className="w-48 text-center text-muted-foreground">
+                      {new Date(record.date).toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                    </span>
+                    <span className={`w-32 text-right tabular-nums font-medium ${record.status === '已消耗' ? 'text-destructive' : 'text-foreground'}`}>
+                      {record.status === '已消耗' ? '-' : '+'}{record.amount}
+                    </span>
+                  </div>
+                ))}
+                {usageHistory.length === 0 && (
+                  <div className="py-8 text-center text-muted-foreground text-sm">
+                    暂无更多数据
+                  </div>
+                )}
               </div>
             </TabsContent>
 
@@ -137,5 +144,4 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
         </div>
       </DialogContent>
     </Dialog>);
-
 }
