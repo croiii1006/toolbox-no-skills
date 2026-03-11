@@ -29,7 +29,7 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
               </TabsTrigger>
               <TabsTrigger
                 value="usage"
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:shadow-none px-1 pb-3 text-base font-semibold text-muted-foreground">
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:shadow-none px-1 pb-3 text-base font-normal text-muted-foreground">
                 
                 {t('common.usage')}
               </TabsTrigger>
