@@ -46,11 +46,17 @@ export function MemoryProvider({ children }: { children: ReactNode }) {
   const [entries, setEntries] = useState<MemoryEntry[]>(SEED);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const addEntry = useCallback((entry: Omit<MemoryEntry, 'id' | 'createdAt' | 'updatedAt'>) => {
+  const addEntry = useCallback((entry: Omit<MemoryEntry, 'id' | 'createdAt' | 'updatedAt'>): boolean => {
+    const duplicate = entries.some(e => e.title.trim() === entry.title.trim());
+    if (duplicate) {
+      toast.warning('该标题已存在于记忆库中');
+      return false;
+    }
     const now = new Date().toISOString().slice(0, 10);
     setEntries(prev => [...prev, { ...entry, id: crypto.randomUUID(), createdAt: now, updatedAt: now }]);
     toast.success('已添加到记忆库');
-  }, []);
+    return true;
+  }, [entries]);
 
   const updateEntry = useCallback((entry: MemoryEntry) => {
     const now = new Date().toISOString().slice(0, 10);
