@@ -16,6 +16,7 @@ import {
   History,
   Trash2,
   RotateCcw,
+  Database,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -36,6 +37,8 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { InfiniteCanvas } from './InfiniteCanvas';
+import { useMemory } from '@/contexts/MemoryContext';
+import { MemorySelectionDialog } from '@/components/modules/memory/MemorySelectionDialog';
 
 interface VideoReplicationProps {
   onNavigate?: (itemId: string) => void;
