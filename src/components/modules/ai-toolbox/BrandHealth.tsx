@@ -112,6 +112,10 @@ interface BrandHealthProps {
 export function BrandHealth({ onNavigate }: BrandHealthProps) {
   const { i18n } = useTranslation();
   const { addEntry, setDrawerOpen } = useMemory();
+  const { canAfford, shortfall: getShortfall, deduct } = useCredits();
+  const [creditsDrawerOpen, setCreditsDrawerOpen] = useState(false);
+  const [creditsShortfall, setCreditsShortfall] = useState(0);
+  const REPORT_COST = 200;
   const isZh = i18n.language === 'zh';
   
   const [view, setView] = useState<'input' | 'loading' | 'report'>('input');
