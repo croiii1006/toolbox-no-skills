@@ -118,7 +118,7 @@ export function TopNav() {
             <div className="flex flex-col items-center gap-3">
               <Avatar className="w-14 h-14">
                 <AvatarFallback className="bg-primary text-primary-foreground text-lg font-light">
-                  JD
+                  {USER_INITIALS}
                 </AvatarFallback>
               </Avatar>
               <div className="text-center">
