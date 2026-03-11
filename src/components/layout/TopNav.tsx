@@ -93,9 +93,11 @@ export function TopNav() {
               <Button
                 size="sm"
                 className="rounded-lg bg-foreground text-background hover:bg-foreground/90 text-xs font-semibold px-5"
-                onClick={() => setAccountOpen(true)}
+                asChild
               >
-                {t('common.upgrade')}
+                <a href="https://www.oran.cn/" target="_blank" rel="noopener noreferrer">
+                  {t('common.upgrade')}
+                </a>
               </Button>
               <div className="w-full flex items-center justify-between pt-2 border-t border-border">
                 <span className="text-sm text-muted-foreground">{t('common.credits')}</span>
