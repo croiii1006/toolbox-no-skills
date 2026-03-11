@@ -48,7 +48,7 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                 <div className="flex items-center gap-4">
                   <Avatar className="w-14 h-14">
                     <AvatarFallback className="bg-primary text-primary-foreground text-xl font-semibold">
-                      JD
+                      {USER_INITIALS}
                     </AvatarFallback>
                   </Avatar>
                   <div>
