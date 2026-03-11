@@ -168,6 +168,17 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
   const canSend = hasVideoSource && sellingPoints.length > 0;
   const [isExtracting, setIsExtracting] = useState(false);
   const [viewMode, setViewMode] = useState<'composer' | 'conversation'>('composer');
+  const [lastDeductedAmount, setLastDeductedAmount] = useState(0);
+
+  /* ── Estimated cost helper ── */
+  const estimatedCost = useMemo(() => {
+    let cost = 0;
+    if (styleVideoFile || inspirationVideo) cost += 8;
+    if (productImageFile) cost += 2;
+    cost += sellingPoints.length;
+    cost += selectedMemoryIds.length;
+    return Math.max(cost, 0);
+  }, [styleVideoFile, inspirationVideo, productImageFile, sellingPoints, selectedMemoryIds]);
 
   /* ── Multi-step conversation state ── */
   type ConvStep = 'extracting' | 'extracted' | 'fusing' | 'fused' | 'replicating' | 'done';
