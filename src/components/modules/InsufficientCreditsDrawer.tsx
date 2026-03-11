@@ -22,14 +22,14 @@ export function InsufficientCreditsDrawer({ open, onOpenChange, shortfall }: Ins
           </DialogHeader>
 
           <div className="space-y-5">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground font-light">
               ⚠️ 算力储量不足 (缺口: <span className="font-semibold text-foreground tabular-nums">{shortfall}</span> credit)
             </p>
 
             <Button
               className="w-full justify-center rounded-xl"
-              asChild
-            >
+              asChild>
+              
               <a href="https://www.oran.cn/" target="_blank" rel="noopener noreferrer">
                 快捷充值
               </a>
@@ -37,6 +37,6 @@ export function InsufficientCreditsDrawer({ open, onOpenChange, shortfall }: Ins
           </div>
         </DialogContent>
       </DialogPortal>
-    </Dialog>
-  );
+    </Dialog>);
+
 }
