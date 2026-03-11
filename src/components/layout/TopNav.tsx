@@ -89,7 +89,7 @@ export function TopNav() {
                   <Sparkles className="w-4 h-4" />
                   {t('common.credits')}
                 </div>
-                <span className="text-sm font-light text-foreground">0</span>
+                <span className="text-sm font-light text-foreground">{USER_CREDITS}</span>
               </div>
               
               {/* Usage Details */}
