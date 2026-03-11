@@ -27,20 +27,10 @@ export function InsufficientCreditsDrawer({ open, onOpenChange, shortfall }: Ins
           <div className="space-y-3">
             <Button
               className="w-full justify-center gap-2 rounded-xl"
-              variant="outline"
               asChild
             >
               <a href="https://www.oran.cn/" target="_blank" rel="noopener noreferrer">
                 快捷充值
-              </a>
-            </Button>
-            <Button
-              className="w-full justify-center gap-2 rounded-xl"
-              asChild
-            >
-              <a href="https://www.oran.cn/" target="_blank" rel="noopener noreferrer">
-                <Rocket className="w-4 h-4" />
-                升级 Pro 套餐 (最划算)
               </a>
             </Button>
           </div>
