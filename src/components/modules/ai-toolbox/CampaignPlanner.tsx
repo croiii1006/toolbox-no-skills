@@ -6,7 +6,10 @@ import { type HistoryStatus, statusConfig } from '@/types/history';
 import {
   Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger,
 } from '@/components/ui/sheet';
+import { useCredits } from '@/contexts/CreditsContext';
+import { InsufficientCreditsDrawer } from '@/components/modules/InsufficientCreditsDrawer';
 
+const REPORT_COST = 200;
 interface HistoryItem {
   id: string;
   payload: CampaignPayload;
