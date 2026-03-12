@@ -33,6 +33,17 @@ export function MarketInsightComposer({ onSubmit, disabled, initialData }: Marke
   const [competitorInput, setCompetitorInput] = useState('');
   const [casesPage, setCasesPage] = useState(0);
   const competitorInputRef = useRef<HTMLInputElement>(null);
+  const [selectedMemoryIds, setSelectedMemoryIds] = useState<string[]>([]);
+  const [memoryDialogOpen, setMemoryDialogOpen] = useState(false);
+
+  const { entries } = useMemory();
+  const memoryItems = useMemo(() => entries.map((e) => ({
+    id: e.id, name: e.title, desc: e.content.slice(0, 60), tag: e.category, charCount: e.content.length,
+  })), [entries]);
+
+  const toggleMemory = useCallback((id: string) => {
+    setSelectedMemoryIds(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
+  }, []);
 
   const canSend = brandName.trim() && category.trim() && competitors.length > 0;
 
