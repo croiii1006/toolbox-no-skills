@@ -262,6 +262,15 @@ export function MarketInsightComposer({ onSubmit, disabled, initialData }: Marke
           </div> :
         null;
       })()}
+
+      <MemorySelectionDialog
+        open={memoryDialogOpen}
+        onOpenChange={setMemoryDialogOpen}
+        items={memoryItems}
+        selectedIds={selectedMemoryIds}
+        onToggle={toggleMemory}
+        maxChars={2000}
+      />
     </div>);
 
 }
