@@ -1,8 +1,10 @@
-import { useState, useRef, useCallback } from 'react';
-import { ArrowUp, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useRef, useCallback, useMemo } from 'react';
+import { ArrowUp, X, ChevronLeft, ChevronRight, Database } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CategoryCascader, CATEGORY_TREE } from '@/components/modules/skills/CategoryCascader';
 import { ShowcaseCard, SHOWCASE_CARDS } from './app-plaza/ShowcaseCard';
+import { useMemory } from '@/contexts/MemoryContext';
+import { MemorySelectionDialog } from '@/components/modules/memory/MemorySelectionDialog';
 
 export interface HistoryEntry {
   id: string;
@@ -31,6 +33,17 @@ export function MarketInsightComposer({ onSubmit, disabled, initialData }: Marke
   const [competitorInput, setCompetitorInput] = useState('');
   const [casesPage, setCasesPage] = useState(0);
   const competitorInputRef = useRef<HTMLInputElement>(null);
+  const [selectedMemoryIds, setSelectedMemoryIds] = useState<string[]>([]);
+  const [memoryDialogOpen, setMemoryDialogOpen] = useState(false);
+
+  const { entries } = useMemory();
+  const memoryItems = useMemo(() => entries.map((e) => ({
+    id: e.id, name: e.title, desc: e.content.slice(0, 60), tag: e.category, charCount: e.content.length,
+  })), [entries]);
+
+  const toggleMemory = useCallback((id: string) => {
+    setSelectedMemoryIds(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
+  }, []);
 
   const canSend = brandName.trim() && category.trim() && competitors.length > 0;
 
@@ -140,9 +153,40 @@ export function MarketInsightComposer({ onSubmit, disabled, initialData }: Marke
             </div>
           </div>
 
+          {/* Selected memories */}
+          {selectedMemoryIds.length > 0 && (
+            <div className="px-5 pb-2 flex flex-wrap gap-1.5">
+              {selectedMemoryIds.map(id => {
+                const item = memoryItems.find(m => m.id === id);
+                if (!item) return null;
+                return (
+                  <span key={id} className="inline-flex items-center gap-1 h-6 rounded-full bg-primary/10 border border-primary/20 px-2 text-xs text-primary">
+                    <Database className="w-3 h-3" />
+                    {item.name}
+                    <button onClick={() => toggleMemory(id)} className="hover:text-foreground transition-colors">
+                      <X className="w-3 h-3" />
+                    </button>
+                  </span>
+                );
+              })}
+            </div>
+          )}
+
           {/* Bottom toolbar */}
           <div className="flex items-center justify-between px-5 py-3 border-t border-border/20">
             <div className="flex items-center gap-1.5 text-[11px]">
+              <button
+                onClick={() => setMemoryDialogOpen(true)}
+                className={cn(
+                  'flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-colors text-[11px]',
+                  selectedMemoryIds.length > 0
+                    ? 'bg-primary/10 text-primary'
+                    : 'bg-muted/30 text-muted-foreground hover:bg-muted/50 hover:text-foreground'
+                )}
+              >
+                <Database className="w-3.5 h-3.5" />
+                <span className="font-medium">记忆库{selectedMemoryIds.length > 0 ? ` (${selectedMemoryIds.length})` : ''}</span>
+              </button>
               <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-accent/8 text-accent/80">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/60 opacity-75" />
@@ -218,6 +262,15 @@ export function MarketInsightComposer({ onSubmit, disabled, initialData }: Marke
           </div> :
         null;
       })()}
+
+      <MemorySelectionDialog
+        open={memoryDialogOpen}
+        onOpenChange={setMemoryDialogOpen}
+        items={memoryItems}
+        selectedIds={selectedMemoryIds}
+        onToggle={toggleMemory}
+        maxChars={2000}
+      />
     </div>);
 
 }
