@@ -1,8 +1,10 @@
-import { useState, useRef, useCallback } from 'react';
-import { ArrowUp, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useRef, useCallback, useMemo } from 'react';
+import { ArrowUp, X, ChevronLeft, ChevronRight, Database } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CategoryCascader, CATEGORY_TREE } from '@/components/modules/skills/CategoryCascader';
 import { ShowcaseCard, SHOWCASE_CARDS } from './app-plaza/ShowcaseCard';
+import { useMemory } from '@/contexts/MemoryContext';
+import { MemorySelectionDialog } from '@/components/modules/memory/MemorySelectionDialog';
 
 export interface HistoryEntry {
   id: string;
