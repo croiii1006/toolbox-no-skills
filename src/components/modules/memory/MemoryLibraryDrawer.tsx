@@ -21,12 +21,11 @@ interface Props {
 }
 
 export function MemoryLibraryDrawer({ open, onOpenChange }: Props) {
-  const { entries, addEntry, updateEntry, deleteEntry, importEntries } = useMemory();
+  const { entries, addEntry, updateEntry, deleteEntry } = useMemory();
   const [search, setSearch] = useState('');
   const [editEntry, setEditEntry] = useState<MemoryEntry | null>(null);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const filtered = useMemo(() => {
     let list = entries;
