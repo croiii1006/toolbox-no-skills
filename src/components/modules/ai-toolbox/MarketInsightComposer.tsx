@@ -174,7 +174,14 @@ export function MarketInsightComposer({ onSubmit, disabled, initialData }: Marke
 
           {/* Bottom toolbar */}
           <div className="flex items-center justify-between px-5 py-3 border-t border-border/20">
-            <div className="flex items-center gap-1.5 text-[11px]">
+            <div className="flex items-center gap-2 text-[11px]">
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-accent/8 text-accent/80">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/60 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-accent/80" />
+                </span>
+                <span className="text-[11px] font-medium">联网搜索中</span>
+              </div>
               <button
                 onClick={() => setMemoryDialogOpen(true)}
                 className={cn(
@@ -187,13 +194,6 @@ export function MarketInsightComposer({ onSubmit, disabled, initialData }: Marke
                 <Database className="w-3.5 h-3.5" />
                 <span className="font-medium">记忆库{selectedMemoryIds.length > 0 ? ` (${selectedMemoryIds.length})` : ''}</span>
               </button>
-              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-accent/8 text-accent/80">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/60 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-accent/80" />
-                </span>
-                <span className="text-[11px] font-medium">联网搜索中</span>
-              </div>
             </div>
 
             <div className="flex items-center gap-3">
