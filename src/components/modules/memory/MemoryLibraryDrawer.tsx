@@ -140,13 +140,6 @@ export function MemoryLibraryDrawer({ open, onOpenChange }: Props) {
             </div>
           </ScrollArea>
 
-          <div className="px-5 py-3 border-t border-border">
-            <input ref={fileInputRef} type="file" accept=".json,.txt,.md,.csv" className="hidden" onChange={handleFileImport} />
-            <Button onClick={openNew} className="w-full h-10 rounded-xl gap-2 font-medium">
-              <Upload className="w-4 h-4" />
-              导入记忆条目
-            </Button>
-          </div>
         </SheetContent>
       </Sheet>
 
