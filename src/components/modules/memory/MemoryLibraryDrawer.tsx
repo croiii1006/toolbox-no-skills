@@ -36,37 +36,6 @@ export function MemoryLibraryDrawer({ open, onOpenChange }: Props) {
     return list;
   }, [entries, search]);
 
-  const openNew = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleFileImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const text = await file.text();
-    try {
-      const parsed = JSON.parse(text);
-      if (Array.isArray(parsed)) {
-        importEntries(parsed);
-      } else {
-        addEntry({
-          title: parsed.title || file.name.replace(/\.[^/.]+$/, ''),
-          content: parsed.content || text,
-          category: parsed.category || 'other',
-          tags: parsed.tags || [],
-        });
-      }
-    } catch {
-      addEntry({
-        title: file.name.replace(/\.[^/.]+$/, ''),
-        content: text,
-        category: 'other',
-        tags: [],
-      });
-    }
-    if (fileInputRef.current) fileInputRef.current.value = '';
-  };
-
   const openEdit = (entry: MemoryEntry) => {
     setEditEntry({ ...entry });
     setEditDialogOpen(true);
