@@ -1,7 +1,7 @@
-import { useState, useMemo, useRef } from 'react';
+import { useState, useMemo } from 'react';
 import {
   Database, Search, X, Edit2, Trash2,
-  Tag, MoreHorizontal, Upload } from
+  Tag, MoreHorizontal } from
 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
