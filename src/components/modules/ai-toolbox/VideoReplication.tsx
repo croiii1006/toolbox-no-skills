@@ -9,7 +9,7 @@ import {
   Image as ImageIcon,
   FileText,
   Sparkles,
-  Edit3,
+  
   Check,
   Loader2,
   Plus,
