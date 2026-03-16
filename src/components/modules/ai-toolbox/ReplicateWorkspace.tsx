@@ -633,50 +633,6 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
               </div>
             }
 
-            {/* ── Completed rounds (immutable) ── */}
-            {completedRounds.map((round, idx) =>
-            <React.Fragment key={idx}>
-              {/* Immutable prompt card */}
-              <div className="rounded-xl border border-border/20 bg-card/40 p-4 space-y-3 opacity-80">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-xs text-foreground/50">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>复刻视频prompt（第 {idx + 1} 次）</span>
-                  </div>
-                  <button
-                    onClick={() => {navigator.clipboard.writeText(round.prompt);toast.success('已复制到剪贴板');}}
-                    className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors">
-                    <Copy className="w-3 h-3" />
-                    复制
-                  </button>
-                </div>
-                <p className="text-sm text-foreground/60 leading-relaxed whitespace-pre-line select-text">{round.prompt}</p>
-              </div>
-              {/* Immutable video card */}
-              <div className="rounded-xl border border-border/20 bg-card/40 p-4 space-y-3 opacity-80">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-xs text-foreground/50">
-                    <Check className="w-3.5 h-3.5 text-muted-foreground" />
-                    <span>复刻视频（第 {idx + 1} 次）</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <a href={round.videoUrl} download={`replicated-video-${idx + 1}.mp4`}
-                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors">
-                      <Download className="w-3 h-3" />下载
-                    </a>
-                    <button onClick={() => {setPreviewingVideoUrl(round.videoUrl);setVideoDialogOpen(true);}}
-                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors">
-                      <Maximize2 className="w-3 h-3" />放大
-                    </button>
-                  </div>
-                </div>
-                <div className="relative rounded-lg overflow-hidden bg-muted/20 cursor-pointer"
-                  onClick={() => {setPreviewingVideoUrl(round.videoUrl);setVideoDialogOpen(true);}}>
-                  <video src={round.videoUrl} muted loop playsInline className="w-full max-h-[300px] object-contain" />
-                </div>
-              </div>
-            </React.Fragment>
-            )}
 
             {/* ── Current round: prompt card (editable before confirming) ── */}
             {stepIndex >= 3 && replicatePrompt &&
