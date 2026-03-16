@@ -961,37 +961,16 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
                         </div>
                         
                         {/* Prompt content */}
-                        {editingSegmentId === segment.id ? (
-                          <div className="space-y-1" onClick={(e) => e.stopPropagation()}>
-                            <Textarea
-                              value={editingPromptText}
-                              onChange={(e) => setEditingPromptText(e.target.value)}
-                              className="text-xs min-h-[60px] resize-none"
-                              autoFocus
-                            />
-                            <div className="flex gap-1">
-                              <Button size="sm" className="h-6 text-xs flex-1" onClick={handleSaveEdit}>
-                                <Check className="w-3 h-3 mr-1" />
-                                保存
-                              </Button>
-                              <Button size="sm" variant="outline" className="h-6 text-xs flex-1" onClick={handleCancelEdit}>
-                                <X className="w-3 h-3 mr-1" />
-                                取消
-                              </Button>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="space-y-1">
-                            <p className="text-[10px] text-muted-foreground line-clamp-2" title={segment.originalPrompt}>
-                              原: {segment.originalPrompt}
+                        <div className="space-y-1">
+                          <p className="text-[10px] text-muted-foreground line-clamp-2" title={segment.originalPrompt}>
+                            原: {segment.originalPrompt}
+                          </p>
+                          {segment.newPrompt && (
+                            <p className="text-[10px] text-foreground line-clamp-2" title={segment.newPrompt}>
+                              新: {segment.newPrompt}
                             </p>
-                            {segment.newPrompt && (
-                              <p className="text-[10px] text-foreground line-clamp-2" title={segment.newPrompt}>
-                                新: {segment.newPrompt}
-                              </p>
-                            )}
-                          </div>
-                        )}
+                          )}
+                        </div>
                         
                         {/* Selection indicator */}
                         {selectedSegments.has(segment.id) && (
