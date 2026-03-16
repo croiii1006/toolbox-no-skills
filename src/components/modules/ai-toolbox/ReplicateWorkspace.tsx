@@ -713,35 +713,6 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
               </div>
             }
 
-            {/* ── New editable prompt card (for re-generation) ── */}
-            {isEditingPrompt &&
-            <div className="rounded-xl border border-primary/30 bg-card/60 p-4 space-y-3 animate-fade-in">
-                <div className="flex items-center gap-2 text-xs text-foreground/70">
-                  <Edit3 className="w-3.5 h-3.5 text-primary" />
-                  <span>编辑复刻视频prompt</span>
-                </div>
-                <textarea
-                  value={replicatePrompt}
-                  onChange={(e) => setReplicatePrompt(e.target.value)}
-                  className="w-full min-h-[120px] rounded-lg border border-border/30 bg-background/50 px-3 py-2 text-sm text-foreground leading-relaxed focus:outline-none focus:ring-1 focus:ring-primary/40 resize-y" />
-                <div className="flex justify-end gap-2">
-                  <button
-                    onClick={() => setIsEditingPrompt(false)}
-                    className="px-3 py-1.5 rounded-lg text-xs font-medium border border-border/30 text-foreground/70 hover:bg-muted/30 transition-colors">
-                    取消
-                  </button>
-                  <button
-                    onClick={() => {
-                      setIsEditingPrompt(false);
-                      handleConfirmReplicate();
-                    }}
-                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors flex items-center gap-1">
-                    <Play className="w-3 h-3" />
-                    确认并重新生成
-                  </button>
-                </div>
-              </div>
-            }
 
             {/* ── Step 5: Replicating video ── */}
             {convStep === 'replicating' && !errorInfo &&
