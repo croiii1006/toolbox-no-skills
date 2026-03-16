@@ -21,7 +21,7 @@ import {
   ChevronRight,
   History,
   Download,
-  Edit3,
+  
   AlertCircle,
   RefreshCw,
   Database } from
@@ -185,7 +185,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
   const [convStep, setConvStep] = useState<ConvStep>('extracting');
   const [extractedOriginalPrompt, setExtractedOriginalPrompt] = useState('');
   const [replicatePrompt, setReplicatePrompt] = useState('');
-  const [isEditingPrompt, setIsEditingPrompt] = useState(false);
+  
   const [generatedVideoUrl, setGeneratedVideoUrl] = useState<string | null>(null);
   const [videoDialogOpen, setVideoDialogOpen] = useState(false);
   const [refVideoDialogOpen, setRefVideoDialogOpen] = useState(false);
@@ -337,7 +337,6 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
     setExtractedOriginalPrompt('');
     setReplicatePrompt('');
     setGeneratedVideoUrl(null);
-    setIsEditingPrompt(false);
     setOriginalPromptExpanded(false);
     setIsExtracting(true);
     setExtractedPromptText('');
@@ -684,22 +683,14 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
             )}
 
             {/* ── Current round: prompt card (editable before confirming) ── */}
-            {stepIndex >= 3 && replicatePrompt && !isEditingPrompt &&
+            {stepIndex >= 3 && replicatePrompt &&
             <div className="rounded-xl border border-primary/30 bg-card/60 p-4 space-y-3 animate-fade-in">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-xs text-foreground/70">
                     <Sparkles className="w-3.5 h-3.5 text-primary" />
                     <span>复刻视频prompt已生成！</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    {convStep === 'fused' &&
-                    <button
-                      onClick={() => setIsEditingPrompt(true)}
-                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors">
-                      <Edit3 className="w-3 h-3" />
-                      编辑
-                    </button>
-                    }
+                   <div className="flex items-center gap-2">
                     <button
                     onClick={handleCopyPrompt}
                     className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors">
@@ -721,35 +712,6 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
               </div>
             }
 
-            {/* ── New editable prompt card (for re-generation) ── */}
-            {isEditingPrompt &&
-            <div className="rounded-xl border border-primary/30 bg-card/60 p-4 space-y-3 animate-fade-in">
-                <div className="flex items-center gap-2 text-xs text-foreground/70">
-                  <Edit3 className="w-3.5 h-3.5 text-primary" />
-                  <span>编辑复刻视频prompt</span>
-                </div>
-                <textarea
-                  value={replicatePrompt}
-                  onChange={(e) => setReplicatePrompt(e.target.value)}
-                  className="w-full min-h-[120px] rounded-lg border border-border/30 bg-background/50 px-3 py-2 text-sm text-foreground leading-relaxed focus:outline-none focus:ring-1 focus:ring-primary/40 resize-y" />
-                <div className="flex justify-end gap-2">
-                  <button
-                    onClick={() => setIsEditingPrompt(false)}
-                    className="px-3 py-1.5 rounded-lg text-xs font-medium border border-border/30 text-foreground/70 hover:bg-muted/30 transition-colors">
-                    取消
-                  </button>
-                  <button
-                    onClick={() => {
-                      setIsEditingPrompt(false);
-                      handleConfirmReplicate();
-                    }}
-                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors flex items-center gap-1">
-                    <Play className="w-3 h-3" />
-                    确认并重新生成
-                  </button>
-                </div>
-              </div>
-            }
 
             {/* ── Step 5: Replicating video ── */}
             {convStep === 'replicating' && !errorInfo &&
@@ -814,11 +776,6 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
               </div>
             }
 
-            {/* ── Regenerate button after done ── */}
-            {convStep === 'done' && !isEditingPrompt &&
-            <div className="flex justify-center pt-2">
-              </div>
-            }
 
           </div>
         </div>
