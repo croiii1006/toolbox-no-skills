@@ -43,7 +43,7 @@ interface VideoSegment {
   endTime: number;
   originalPrompt: string;
   newPrompt: string;
-  isEditing: boolean;
+  
   thumbnail?: string;
   isSelected: boolean;
 }
