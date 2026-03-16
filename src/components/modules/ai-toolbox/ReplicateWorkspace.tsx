@@ -776,11 +776,6 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
               </div>
             }
 
-            {/* ── Regenerate button after done ── */}
-            {convStep === 'done' && !isEditingPrompt &&
-            <div className="flex justify-center pt-2">
-              </div>
-            }
 
           </div>
         </div>
