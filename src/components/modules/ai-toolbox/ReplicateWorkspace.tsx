@@ -817,20 +817,6 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
             {/* ── Regenerate button after done ── */}
             {convStep === 'done' && !isEditingPrompt &&
             <div className="flex justify-center pt-2">
-                <button
-                onClick={() => {
-                  // Push current round to completed rounds
-                  if (generatedVideoUrl && replicatePrompt) {
-                    setCompletedRounds(prev => [...prev, { prompt: replicatePrompt, videoUrl: generatedVideoUrl }]);
-                  }
-                  setGeneratedVideoUrl(null);
-                  setConvStep('fused');
-                  setIsEditingPrompt(true);
-                }}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-medium border border-border/30 text-foreground/70 hover:bg-muted/20 hover:border-border/50 transition-colors">
-                  <Edit3 className="w-3.5 h-3.5" />
-                  编辑 Prompt 重新生成
-                </button>
               </div>
             }
 
