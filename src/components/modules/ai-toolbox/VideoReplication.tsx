@@ -426,8 +426,39 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
     toast.success('复刻分析完成');
   }, [originalVideo, sellingPoints]);
 
+  // Handle segment selection (click = toggle single, ctrl+click = multi-select)
+  const handleSegmentClick = useCallback((segmentId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSelectedSegments(prev => {
+      const newSet = new Set(prev);
+      if (e.ctrlKey || e.metaKey) {
+        if (newSet.has(segmentId)) {
+          newSet.delete(segmentId);
+        } else {
+          newSet.add(segmentId);
+        }
+      } else {
+        if (newSet.has(segmentId) && newSet.size === 1) {
+          newSet.clear();
+        } else {
+          newSet.clear();
+          newSet.add(segmentId);
+        }
+      }
+      return newSet;
+    });
+  }, []);
 
-  // Handle chat message send
+  // Handle select all
+  const handleSelectAll = useCallback(() => {
+    if (selectedSegments.size === segments.length) {
+      setSelectedSegments(new Set());
+    } else {
+      setSelectedSegments(new Set(segments.map(s => s.id)));
+    }
+  }, [segments, selectedSegments]);
+
+
   const handleSendMessage = useCallback(async () => {
     if (!inputMessage.trim()) return;
     
