@@ -372,7 +372,6 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
         endTime: 5,
         originalPrompt: '产品展示镜头，特写产品外观，柔和的灯光环境',
         newPrompt: '',
-        isEditing: false,
         isSelected: false,
       },
       {
@@ -381,7 +380,6 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
         endTime: 12,
         originalPrompt: '产品功能演示，手部操作特写，流畅的动作',
         newPrompt: '',
-        isEditing: false,
         isSelected: false,
       },
       {
@@ -390,7 +388,6 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
         endTime: 18,
         originalPrompt: '使用场景展示，生活化环境，自然光线',
         newPrompt: '',
-        isEditing: false,
         isSelected: false,
       },
       {
@@ -399,7 +396,6 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
         endTime: 25,
         originalPrompt: '品牌logo展示，简洁背景，产品卖点文字叠加',
         newPrompt: '',
-        isEditing: false,
         isSelected: false,
       },
     ];
