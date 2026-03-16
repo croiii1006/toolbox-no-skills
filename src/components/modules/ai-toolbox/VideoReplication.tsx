@@ -945,7 +945,7 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
                           selectedSegments.has(segment.id) 
                             ? "border-primary bg-primary/10 ring-1 ring-primary" 
                             : "border-border hover:border-primary/50",
-                          editingSegmentId === segment.id && "ring-2 ring-primary"
+                          
                         )}
                         onClick={(e) => handleSegmentClick(segment.id, e)}
                         onDoubleClick={() => handleSegmentDoubleClick(segment.id)}
