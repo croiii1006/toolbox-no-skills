@@ -185,7 +185,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
   const [convStep, setConvStep] = useState<ConvStep>('extracting');
   const [extractedOriginalPrompt, setExtractedOriginalPrompt] = useState('');
   const [replicatePrompt, setReplicatePrompt] = useState('');
-  const [isEditingPrompt, setIsEditingPrompt] = useState(false);
+  
   const [generatedVideoUrl, setGeneratedVideoUrl] = useState<string | null>(null);
   const [videoDialogOpen, setVideoDialogOpen] = useState(false);
   const [refVideoDialogOpen, setRefVideoDialogOpen] = useState(false);
