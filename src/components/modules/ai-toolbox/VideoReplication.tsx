@@ -9,7 +9,7 @@ import {
   Image as ImageIcon,
   FileText,
   Sparkles,
-  Edit3,
+  
   Check,
   Loader2,
   Plus,
@@ -28,13 +28,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { InfiniteCanvas } from './InfiniteCanvas';
 import { useMemory } from '@/contexts/MemoryContext';
@@ -50,7 +43,7 @@ interface VideoSegment {
   endTime: number;
   originalPrompt: string;
   newPrompt: string;
-  isEditing: boolean;
+  
   thumbnail?: string;
   isSelected: boolean;
 }
@@ -71,8 +64,8 @@ interface Message {
   segmentId?: string;
 }
 
-// View state: 'upload' -> 'analyzing' -> 'prompts' -> 'chat'
-type ViewState = 'upload' | 'analyzing' | 'prompts' | 'chat';
+// View state: 'upload' -> 'analyzing' -> 'chat'
+type ViewState = 'upload' | 'analyzing' | 'chat';
 
 interface CanvasItem {
   id: string;
@@ -127,13 +120,6 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
   // Segmentation state
   const [segments, setSegments] = useState<VideoSegment[]>([]);
   const [selectedSegments, setSelectedSegments] = useState<Set<string>>(new Set());
-  const [editingSegmentId, setEditingSegmentId] = useState<string | null>(null);
-  const [editingPromptText, setEditingPromptText] = useState<string>('');
-  
-  // Dialog state for prompt editing
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [dialogPromptText, setDialogPromptText] = useState('');
-  const [dialogSegmentId, setDialogSegmentId] = useState<string | null>(null);
   
   // Chat state
   const [messages, setMessages] = useState<Message[]>([]);
@@ -218,7 +204,7 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
 
   // Restore project from history
   const restoreFromHistory = useCallback((item: ProjectHistoryItem) => {
-    setViewState(item.viewState === 'upload' ? 'prompts' : item.viewState);
+    setViewState(item.viewState === 'upload' ? 'chat' : item.viewState);
     setSegments(item.segments);
     setMessages(item.messages.map(m => ({
       ...m,
@@ -386,7 +372,6 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
         endTime: 5,
         originalPrompt: '产品展示镜头，特写产品外观，柔和的灯光环境',
         newPrompt: '',
-        isEditing: false,
         isSelected: false,
       },
       {
@@ -395,7 +380,6 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
         endTime: 12,
         originalPrompt: '产品功能演示，手部操作特写，流畅的动作',
         newPrompt: '',
-        isEditing: false,
         isSelected: false,
       },
       {
@@ -404,7 +388,6 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
         endTime: 18,
         originalPrompt: '使用场景展示，生活化环境，自然光线',
         newPrompt: '',
-        isEditing: false,
         isSelected: false,
       },
       {
@@ -413,7 +396,6 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
         endTime: 25,
         originalPrompt: '品牌logo展示，简洁背景，产品卖点文字叠加',
         newPrompt: '',
-        isEditing: false,
         isSelected: false,
       },
     ];
@@ -428,53 +410,10 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
     }));
     
     setSegments(segmentsWithNewPrompts);
-    setViewState('prompts');
+    setViewState('chat');
     
     toast.success('复刻分析完成');
   }, [originalVideo, sellingPoints]);
-
-  // Handle prompt click - open dialog
-  const handlePromptClick = useCallback((segmentId: string) => {
-    const segment = segments.find(s => s.id === segmentId);
-    if (segment) {
-      setDialogSegmentId(segmentId);
-      setDialogPromptText(segment.newPrompt);
-      setDialogOpen(true);
-    }
-  }, [segments]);
-
-  // Handle dialog send - save and enter chat view
-  const handleDialogSend = useCallback(() => {
-    if (dialogSegmentId && dialogPromptText.trim()) {
-      // Update the segment's prompt
-      setSegments(prev => prev.map(s => 
-        s.id === dialogSegmentId 
-          ? { ...s, newPrompt: dialogPromptText }
-          : s
-      ));
-      
-      // Add to messages
-      setMessages(prev => [...prev, {
-        id: crypto.randomUUID(),
-        role: 'user',
-        content: `修改片段 ${dialogSegmentId} 的prompt为: ${dialogPromptText}`,
-        timestamp: new Date(),
-      }, {
-        id: crypto.randomUUID(),
-        role: 'assistant',
-        content: '已更新prompt。您可以继续修改其他片段或直接生成视频。',
-        timestamp: new Date(),
-      }]);
-      
-      // Close dialog and enter chat view
-      setDialogOpen(false);
-      setDialogSegmentId(null);
-      setDialogPromptText('');
-      setViewState('chat');
-      
-      toast.success('已保存修改');
-    }
-  }, [dialogSegmentId, dialogPromptText]);
 
   // Handle segment selection (click = toggle single, ctrl+click = multi-select)
   const handleSegmentClick = useCallback((segmentId: string, e: React.MouseEvent) => {
@@ -482,14 +421,12 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
     setSelectedSegments(prev => {
       const newSet = new Set(prev);
       if (e.ctrlKey || e.metaKey) {
-        // Multi-select mode
         if (newSet.has(segmentId)) {
           newSet.delete(segmentId);
         } else {
           newSet.add(segmentId);
         }
       } else {
-        // Single select mode
         if (newSet.has(segmentId) && newSet.size === 1) {
           newSet.clear();
         } else {
@@ -510,36 +447,7 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
     }
   }, [segments, selectedSegments]);
 
-  // Handle double-click to edit
-  const handleSegmentDoubleClick = useCallback((segmentId: string) => {
-    const segment = segments.find(s => s.id === segmentId);
-    if (segment) {
-      setEditingSegmentId(segmentId);
-      setEditingPromptText(segment.newPrompt || segment.originalPrompt);
-    }
-  }, [segments]);
 
-  // Handle save edit
-  const handleSaveEdit = useCallback(() => {
-    if (editingSegmentId) {
-      setSegments(prev => prev.map(s => 
-        s.id === editingSegmentId 
-          ? { ...s, newPrompt: editingPromptText }
-          : s
-      ));
-      setEditingSegmentId(null);
-      setEditingPromptText('');
-      toast.success('已保存修改');
-    }
-  }, [editingSegmentId, editingPromptText]);
-
-  // Handle cancel edit
-  const handleCancelEdit = useCallback(() => {
-    setEditingSegmentId(null);
-    setEditingPromptText('');
-  }, []);
-
-  // Handle chat message send
   const handleSendMessage = useCallback(async () => {
     if (!inputMessage.trim()) return;
     
@@ -946,82 +854,6 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
           </div>
         )}
 
-        {/* Prompts List View (after analysis, before chat) */}
-        {!historyOpen && viewState === 'prompts' && (
-          <div className="flex-1 flex flex-col min-h-0 p-4 space-y-4 overflow-y-auto">
-            <div className="text-center mb-2">
-              <h3 className="font-medium">生成的Prompt列表</h3>
-              <p className="text-sm text-muted-foreground">点击任意片段进行修改</p>
-            </div>
-            
-            {/* Prompt Cards */}
-            <div className="space-y-3">
-              {segments.map((segment) => (
-                <div
-                  key={segment.id}
-                  className="p-4 rounded-lg border border-border hover:border-primary/50 cursor-pointer transition-all hover:bg-muted/30"
-                  onClick={() => handlePromptClick(segment.id)}
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-medium text-primary">
-                      片段 {segment.id} • {segment.startTime}s - {segment.endTime}s
-                    </span>
-                    <Edit3 className="w-4 h-4 text-muted-foreground" />
-                  </div>
-                  <p className="text-sm">{segment.newPrompt}</p>
-                </div>
-              ))}
-            </div>
-            
-            {/* Direct Generate Button */}
-            <Button 
-              className="w-full mt-4"
-              onClick={handleGenerateVideo}
-              disabled={isGenerating}
-            >
-              {isGenerating ? (
-                <>
-                  <Sparkles className="w-4 h-4 mr-2 animate-pulse" />
-                  生成中...
-                </>
-              ) : (
-                <>
-                  <Play className="w-4 h-4 mr-2" />
-                  直接生成视频
-                </>
-              )}
-            </Button>
-          </div>
-        )}
-
-        {/* Prompt Edit Dialog */}
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogContent className="sm:max-w-[500px]">
-            <DialogHeader>
-              <DialogTitle>
-                编辑片段 {dialogSegmentId} 的Prompt
-              </DialogTitle>
-            </DialogHeader>
-            <div className="py-4">
-              <Textarea
-                value={dialogPromptText}
-                onChange={(e) => setDialogPromptText(e.target.value)}
-                placeholder="输入新的prompt..."
-                className="min-h-[150px]"
-              />
-            </div>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setDialogOpen(false)}>
-                取消
-              </Button>
-              <Button onClick={handleDialogSend}>
-                <Send className="w-4 h-4 mr-2" />
-                发送并继续编辑
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-
         {/* Chat View with Timeline */}
         {!historyOpen && viewState === 'chat' && (
           <div className="flex-1 flex flex-col min-h-0">
@@ -1031,7 +863,7 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
               <div className="px-4 py-3 border-b border-border shrink-0">
                 <div className="flex items-center justify-between mb-2">
                   <p className="text-xs text-muted-foreground">
-                    时间轴（单击选中，Ctrl+单击多选，双击编辑）
+                    时间轴（单击选中，Ctrl+单击多选）
                   </p>
                   <button
                     className={cn(
@@ -1057,10 +889,10 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
                           selectedSegments.has(segment.id) 
                             ? "border-primary bg-primary/10 ring-1 ring-primary" 
                             : "border-border hover:border-primary/50",
-                          editingSegmentId === segment.id && "ring-2 ring-primary"
+                          
                         )}
                         onClick={(e) => handleSegmentClick(segment.id, e)}
-                        onDoubleClick={() => handleSegmentDoubleClick(segment.id)}
+                        
                       >
                         {/* Time indicator */}
                         <div className="flex items-center justify-between mb-1">
@@ -1073,37 +905,16 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
                         </div>
                         
                         {/* Prompt content */}
-                        {editingSegmentId === segment.id ? (
-                          <div className="space-y-1" onClick={(e) => e.stopPropagation()}>
-                            <Textarea
-                              value={editingPromptText}
-                              onChange={(e) => setEditingPromptText(e.target.value)}
-                              className="text-xs min-h-[60px] resize-none"
-                              autoFocus
-                            />
-                            <div className="flex gap-1">
-                              <Button size="sm" className="h-6 text-xs flex-1" onClick={handleSaveEdit}>
-                                <Check className="w-3 h-3 mr-1" />
-                                保存
-                              </Button>
-                              <Button size="sm" variant="outline" className="h-6 text-xs flex-1" onClick={handleCancelEdit}>
-                                <X className="w-3 h-3 mr-1" />
-                                取消
-                              </Button>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="space-y-1">
-                            <p className="text-[10px] text-muted-foreground line-clamp-2" title={segment.originalPrompt}>
-                              原: {segment.originalPrompt}
+                        <div className="space-y-1">
+                          <p className="text-[10px] text-muted-foreground line-clamp-2" title={segment.originalPrompt}>
+                            原: {segment.originalPrompt}
+                          </p>
+                          {segment.newPrompt && (
+                            <p className="text-[10px] text-foreground line-clamp-2" title={segment.newPrompt}>
+                              新: {segment.newPrompt}
                             </p>
-                            {segment.newPrompt && (
-                              <p className="text-[10px] text-foreground line-clamp-2" title={segment.newPrompt}>
-                                新: {segment.newPrompt}
-                              </p>
-                            )}
-                          </div>
-                        )}
+                          )}
+                        </div>
                         
                         {/* Selection indicator */}
                         {selectedSegments.has(segment.id) && (
