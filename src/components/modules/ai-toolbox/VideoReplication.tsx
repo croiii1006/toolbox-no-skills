@@ -421,7 +421,7 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
     }));
     
     setSegments(segmentsWithNewPrompts);
-    setViewState('prompts');
+    setViewState('chat');
     
     toast.success('复刻分析完成');
   }, [originalVideo, sellingPoints]);
