@@ -745,7 +745,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
                     }}
                     className="px-3 py-1.5 rounded-lg text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors flex items-center gap-1">
                     <Play className="w-3 h-3" />
-                    确认并重新生成
+                    确认并生成
                   </button>
                 </div>
               </div>
