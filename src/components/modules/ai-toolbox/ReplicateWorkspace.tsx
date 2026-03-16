@@ -197,11 +197,6 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
   const [promptCopied, setPromptCopied] = useState(false);
 
   /* ── Completed rounds history (immutable prompt+video pairs) ── */
-  interface CompletedRound {
-    prompt: string;
-    videoUrl: string;
-  }
-  const [completedRounds, setCompletedRounds] = useState<CompletedRound[]>([]);
   const [previewingVideoUrl, setPreviewingVideoUrl] = useState<string | null>(null);
 
   /* ── Refs ── */
