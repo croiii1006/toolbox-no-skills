@@ -337,7 +337,6 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
     setExtractedOriginalPrompt('');
     setReplicatePrompt('');
     setGeneratedVideoUrl(null);
-    setIsEditingPrompt(false);
     setOriginalPromptExpanded(false);
     setIsExtracting(true);
     setExtractedPromptText('');
