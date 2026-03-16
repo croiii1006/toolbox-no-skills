@@ -211,7 +211,7 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
 
   // Restore project from history
   const restoreFromHistory = useCallback((item: ProjectHistoryItem) => {
-    setViewState(item.viewState === 'upload' ? 'prompts' : item.viewState);
+    setViewState(item.viewState === 'upload' ? 'chat' : item.viewState);
     setSegments(item.segments);
     setMessages(item.messages.map(m => ({
       ...m,
