@@ -948,7 +948,7 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
                           
                         )}
                         onClick={(e) => handleSegmentClick(segment.id, e)}
-                        onDoubleClick={() => handleSegmentDoubleClick(segment.id)}
+                        
                       >
                         {/* Time indicator */}
                         <div className="flex items-center justify-between mb-1">
