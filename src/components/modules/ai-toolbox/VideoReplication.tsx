@@ -127,13 +127,6 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
   // Segmentation state
   const [segments, setSegments] = useState<VideoSegment[]>([]);
   const [selectedSegments, setSelectedSegments] = useState<Set<string>>(new Set());
-  const [editingSegmentId, setEditingSegmentId] = useState<string | null>(null);
-  const [editingPromptText, setEditingPromptText] = useState<string>('');
-  
-  // Dialog state for prompt editing
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [dialogPromptText, setDialogPromptText] = useState('');
-  const [dialogSegmentId, setDialogSegmentId] = useState<string | null>(null);
   
   // Chat state
   const [messages, setMessages] = useState<Message[]>([]);
