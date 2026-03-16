@@ -71,8 +71,8 @@ interface Message {
   segmentId?: string;
 }
 
-// View state: 'upload' -> 'analyzing' -> 'prompts' -> 'chat'
-type ViewState = 'upload' | 'analyzing' | 'prompts' | 'chat';
+// View state: 'upload' -> 'analyzing' -> 'chat'
+type ViewState = 'upload' | 'analyzing' | 'chat';
 
 interface CanvasItem {
   id: string;
