@@ -683,7 +683,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
             )}
 
             {/* ── Current round: prompt card (editable before confirming) ── */}
-            {stepIndex >= 3 && replicatePrompt && !isEditingPrompt &&
+            {stepIndex >= 3 && replicatePrompt &&
             <div className="rounded-xl border border-primary/30 bg-card/60 p-4 space-y-3 animate-fade-in">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-xs text-foreground/70">
