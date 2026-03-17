@@ -16,6 +16,16 @@ const COVER_GRADIENTS = [
   'from-fuchsia-500/60 to-pink-400/60',
 ];
 
+export interface TrendingVideoDetail {
+  author?: string;
+  businessType?: string;
+  purpose?: string;
+  audience?: string;
+  techHighlight?: string;
+  stats?: { views: string; likes: string; comments: string; shares: string };
+  tags?: string[];
+}
+
 export interface TrendingVideoItem {
   id: string;
   title: string;
@@ -23,6 +33,7 @@ export interface TrendingVideoItem {
   views: string;
   likes: string;
   coverGradient: string;
+  detail?: TrendingVideoDetail;
 }
 
 export const TRENDING_VIDEOS: TrendingVideoItem[] = [
