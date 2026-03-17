@@ -113,8 +113,17 @@ export function TikTokReport({ onNavigate }: TikTokReportProps) {
   const [creditsShortfall, setCreditsShortfall] = useState(0);
 
   const REPORT_COST = 200;
+  const MAX_IN_PROGRESS = 3;
+  const TIMEOUT_MS = 30 * 60 * 1000;
 
   const handleSubmit = (payload: { category: string; sellingPoints: string[] }) => {
+    // Check in-progress task limit
+    const inProgressCount = reportHistory.filter(h => h.status === 'in_progress').length;
+    if (inProgressCount >= MAX_IN_PROGRESS) {
+      toast.error('任务数量已达上限', { description: '最多同时运行 3 个任务，请等待完成后再提交' });
+      return;
+    }
+
     // Credit check
     if (!canAfford(REPORT_COST)) {
       setCreditsShortfall(shortfall(REPORT_COST));
@@ -132,11 +141,23 @@ export function TikTokReport({ onNavigate }: TikTokReportProps) {
       videoCount: 6,
       status: 'in_progress',
     });
-    // Simulate completion after delay
-    setTimeout(() => {
+
+    const completionTimer = setTimeout(() => {
       updateReportHistoryStatus(historyId, 'completed');
       setPhase('results');
     }, 5000);
+
+    // 30-minute timeout
+    setTimeout(() => {
+      // Check if still in progress (via history)
+      const current = reportHistory.find(h => h.id === historyId);
+      if (current && current.status === 'in_progress') {
+        clearTimeout(completionTimer);
+        updateReportHistoryStatus(historyId, 'failed');
+        refund(REPORT_COST, 'TikTok报告超时退款');
+        toast.error('生成超时', { description: '报告生成超过30分钟未完成，积分已退还' });
+      }
+    }, TIMEOUT_MS);
   };
 
   const handleBack = () => {
