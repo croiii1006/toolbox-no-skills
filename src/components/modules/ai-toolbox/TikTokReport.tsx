@@ -19,23 +19,8 @@ interface TikTokReportProps {
 }
 
 function LoadingPage({ onBack }: { onBack: () => void }) {
-  const tips = [
-    '正在扫描 TikTok 热门视频...',
-    '分析视频内容与卖点匹配度...',
-    '筛选播放量最高的爆款视频...',
-    '整理数据生成报告...',
-  ];
-  const [tipIndex, setTipIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTipIndex((prev) => (prev + 1) % tips.length);
-    }, 2500);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <div className="min-h-full flex flex-col items-center justify-center p-6 relative">
+    <div className="min-h-full flex items-center justify-center p-8 relative">
       <Button
         variant="ghost"
         size="sm"
@@ -45,59 +30,13 @@ function LoadingPage({ onBack }: { onBack: () => void }) {
         <ArrowLeft className="w-4 h-4" />
         返回
       </Button>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="flex flex-col items-center gap-6 max-w-md text-center"
-      >
-        {/* Animated loader */}
-        <div className="relative w-16 h-16">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-            className="w-16 h-16 rounded-full border-[3px] border-muted/30 border-t-foreground/70"
-          />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-lg">🔍</span>
-          </div>
-        </div>
-
-        <div>
-          <h2 className="text-lg font-medium text-foreground/90 mb-2">
-            正在为你收集匹配度最高的爆款TikTok视频...
-          </h2>
-          <motion.p
-            key={tipIndex}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.4 }}
-            className="text-sm text-muted-foreground"
-          >
-            {tips[tipIndex]}
-          </motion.p>
-        </div>
-
-        {/* Progress dots */}
-        <div className="flex items-center gap-1.5 mt-2">
-          {[0, 1, 2, 3].map((i) => (
-            <motion.div
-              key={i}
-              animate={{
-                scale: [1, 1.3, 1],
-                opacity: [0.3, 1, 0.3],
-              }}
-              transition={{
-                duration: 1.2,
-                repeat: Infinity,
-                delay: i * 0.2,
-              }}
-              className="w-1.5 h-1.5 rounded-full bg-foreground/50"
-            />
-          ))}
-        </div>
-      </motion.div>
+      <div className="text-center space-y-4 animate-fade-in">
+        <Loader2 className="w-8 h-8 text-accent animate-spin mx-auto" />
+        <h2 className="text-lg font-medium text-foreground">报告生成中</h2>
+        <p className="text-sm text-muted-foreground max-w-md">
+          正在为你收集匹配度最高的爆款TikTok视频...
+        </p>
+      </div>
     </div>
   );
 }
