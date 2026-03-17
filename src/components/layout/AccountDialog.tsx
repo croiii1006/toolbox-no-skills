@@ -85,6 +85,10 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                     <span className="text-muted-foreground w-40 font-light pl-4">{t('common.topupCredits')}</span>
                     <span className="text-foreground font-light tabular-nums">{topupCredits}</span>
                   </div>
+                  <div className="flex items-center">
+                    <span className="text-muted-foreground w-40 font-light pl-4">{t('common.giftCredits')}</span>
+                    <span className="text-foreground font-light tabular-nums">{giftCredits}</span>
+                  </div>
                 </div>
               </div>
             </TabsContent>

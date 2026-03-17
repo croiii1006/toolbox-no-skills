@@ -102,6 +102,10 @@ export function TopNav() {
                   <span className="text-xs text-muted-foreground">{t('common.topupCredits')}</span>
                   <span className="text-xs font-light text-foreground tabular-nums">{topupCredits}</span>
                 </div>
+                <div className="flex items-center justify-between pl-6">
+                  <span className="text-xs text-muted-foreground">{t('common.giftCredits')}</span>
+                  <span className="text-xs font-light text-foreground tabular-nums">{giftCredits}</span>
+                </div>
               </div>
               
               {/* Usage Details */}
