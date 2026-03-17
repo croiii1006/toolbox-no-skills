@@ -92,9 +92,6 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                 {usageHistory.map((record) =>
                 <div key={record.id} className="px-6 py-4 flex items-center text-sm border-t border-border">
                     <span className="flex-1 text-foreground">{record.label}</span>
-                    <span className={`w-32 text-center ${record.status === '已消耗' ? 'text-destructive' : record.status === '已退还' ? 'text-accent' : 'text-muted-foreground'}`}>
-                      {record.status}
-                    </span>
                     <span className="w-48 text-center text-muted-foreground">
                       {new Date(record.date).toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                     </span>
