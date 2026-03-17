@@ -112,7 +112,7 @@ interface BrandHealthProps {
 export function BrandHealth({ onNavigate }: BrandHealthProps) {
   const { i18n } = useTranslation();
   const { addEntry, setDrawerOpen } = useMemory();
-  const { canAfford, shortfall: getShortfall, deduct } = useCredits();
+  const { canAfford, shortfall: getShortfall, deduct, refund } = useCredits();
   const [creditsDrawerOpen, setCreditsDrawerOpen] = useState(false);
   const [creditsShortfall, setCreditsShortfall] = useState(0);
   const REPORT_COST = 200;
@@ -155,7 +155,17 @@ export function BrandHealth({ onNavigate }: BrandHealthProps) {
     setView('report');
   };
 
+  const MAX_IN_PROGRESS = 3;
+  const TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
+
   const handleGenerate = (payload: { brandName: string; category: string; competitors: string[] }) => {
+    // Check in-progress task limit
+    const inProgressCount = history.filter(h => h.status === 'in_progress').length;
+    if (inProgressCount >= MAX_IN_PROGRESS) {
+      toast.error('任务数量已达上限', { description: '最多同时运行 3 个任务，请等待完成后再提交' });
+      return;
+    }
+
     // Credit check
     if (!canAfford(REPORT_COST)) {
       setCreditsShortfall(getShortfall(REPORT_COST));
@@ -177,19 +187,29 @@ export function BrandHealth({ onNavigate }: BrandHealthProps) {
       status: 'in_progress',
     };
     setHistory(prev => [newEntry, ...prev].slice(0, 20));
-    setTimeout(() => {
-      // Simulate success/failure (always success for now)
-      const success = true;
+
+    // Simulate completion
+    const completionTimer = setTimeout(() => {
       setIsLoading(false);
-      if (success) {
-        setView('report');
-        setHistory(prev => prev.map(h => h.id === newId ? { ...h, status: 'completed' as HistoryStatus } : h));
-      } else {
-        setView('input');
-        setHistory(prev => prev.map(h => h.id === newId ? { ...h, status: 'failed' as HistoryStatus } : h));
-        toast.error('洞察报告生成失败', { description: '请稍后重试' });
-      }
+      setView('report');
+      setHistory(prev => prev.map(h => h.id === newId ? { ...h, status: 'completed' as HistoryStatus } : h));
     }, 1500);
+
+    // 30-minute timeout: mark failed & refund
+    const timeoutTimer = setTimeout(() => {
+      setHistory(prev => {
+        const item = prev.find(h => h.id === newId);
+        if (item && item.status === 'in_progress') {
+          clearTimeout(completionTimer);
+          refund(REPORT_COST, '市场洞察报告超时退款');
+          toast.error('生成超时', { description: '报告生成超过30分钟未完成，积分已退还' });
+          return prev.map(h => h.id === newId ? { ...h, status: 'failed' as HistoryStatus } : h);
+        }
+        return prev;
+      });
+    }, TIMEOUT_MS);
+
+    return () => { clearTimeout(completionTimer); clearTimeout(timeoutTimer); };
   };
 
   const handleBack = () => {
@@ -324,7 +344,16 @@ export function BrandHealth({ onNavigate }: BrandHealthProps) {
   if (view === 'loading') {
     return (
       <>
-        <div className="min-h-full flex items-center justify-center p-8">
+        <div className="min-h-full flex items-center justify-center p-8 relative">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => { setView('input'); }}
+            className="absolute top-4 left-4 gap-1.5 text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            返回
+          </Button>
           <div className="text-center space-y-4 animate-fade-in">
             <Loader2 className="w-8 h-8 text-accent animate-spin mx-auto" />
             <h2 className="text-lg font-medium text-foreground">报告生成中</h2>

@@ -6,17 +6,19 @@ import { useReplicatePrefill } from '@/contexts/ReplicatePrefillContext';
 import { useCredits } from '@/contexts/CreditsContext';
 import { InsufficientCreditsDrawer } from '@/components/modules/InsufficientCreditsDrawer';
 import { statusConfig } from '@/types/history';
-import { History, X, Loader2 } from 'lucide-react';
+import { History, X, ArrowLeft } from 'lucide-react';
 import {
   Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger,
 } from '@/components/ui/sheet';
 import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
 interface TikTokReportProps {
   onNavigate?: (itemId: string) => void;
 }
 
-function LoadingPage() {
+function LoadingPage({ onBack }: { onBack: () => void }) {
   const tips = [
     '正在扫描 TikTok 热门视频...',
     '分析视频内容与卖点匹配度...',
@@ -33,7 +35,16 @@ function LoadingPage() {
   }, []);
 
   return (
-    <div className="min-h-full flex flex-col items-center justify-center p-6">
+    <div className="min-h-full flex flex-col items-center justify-center p-6 relative">
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={onBack}
+        className="absolute top-4 left-4 gap-1.5 text-muted-foreground hover:text-foreground"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        返回
+      </Button>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -97,13 +108,22 @@ export function TikTokReport({ onNavigate }: TikTokReportProps) {
   const [sellingPoints, setSellingPoints] = useState<string[]>([]);
   const { reportHistory, addReportHistory, updateReportHistoryStatus, deleteReportHistory } = useTikTokInspiration();
   const { setPrefill } = useReplicatePrefill();
-  const { canAfford, shortfall, deduct } = useCredits();
+  const { canAfford, shortfall, deduct, refund } = useCredits();
   const [creditsDrawerOpen, setCreditsDrawerOpen] = useState(false);
   const [creditsShortfall, setCreditsShortfall] = useState(0);
 
   const REPORT_COST = 200;
+  const MAX_IN_PROGRESS = 3;
+  const TIMEOUT_MS = 30 * 60 * 1000;
 
   const handleSubmit = (payload: { category: string; sellingPoints: string[] }) => {
+    // Check in-progress task limit
+    const inProgressCount = reportHistory.filter(h => h.status === 'in_progress').length;
+    if (inProgressCount >= MAX_IN_PROGRESS) {
+      toast.error('任务数量已达上限', { description: '最多同时运行 3 个任务，请等待完成后再提交' });
+      return;
+    }
+
     // Credit check
     if (!canAfford(REPORT_COST)) {
       setCreditsShortfall(shortfall(REPORT_COST));
@@ -121,11 +141,23 @@ export function TikTokReport({ onNavigate }: TikTokReportProps) {
       videoCount: 6,
       status: 'in_progress',
     });
-    // Simulate completion after delay
-    setTimeout(() => {
+
+    const completionTimer = setTimeout(() => {
       updateReportHistoryStatus(historyId, 'completed');
       setPhase('results');
     }, 5000);
+
+    // 30-minute timeout
+    setTimeout(() => {
+      // Check if still in progress (via history)
+      const current = reportHistory.find(h => h.id === historyId);
+      if (current && current.status === 'in_progress') {
+        clearTimeout(completionTimer);
+        updateReportHistoryStatus(historyId, 'failed');
+        refund(REPORT_COST, 'TikTok报告超时退款');
+        toast.error('生成超时', { description: '报告生成超过30分钟未完成，积分已退还' });
+      }
+    }, TIMEOUT_MS);
   };
 
   const handleBack = () => {
@@ -157,7 +189,7 @@ export function TikTokReport({ onNavigate }: TikTokReportProps) {
   };
 
   if (phase === 'loading') {
-    return <LoadingPage />;
+    return <LoadingPage onBack={handleBack} />;
   }
 
   if (phase === 'results') {
