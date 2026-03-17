@@ -10,7 +10,7 @@ import { History, X, ArrowLeft, Loader2 } from 'lucide-react';
 import {
   Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger,
 } from '@/components/ui/sheet';
-import { motion } from 'framer-motion';
+
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 
