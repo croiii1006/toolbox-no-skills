@@ -28,6 +28,8 @@ import {
   Database,
 } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { ShowcaseDetailDialog } from "@/components/modules/ai-toolbox/app-plaza/ShowcaseDetailDialog";
+import type { ShowcaseCardData } from "@/components/modules/ai-toolbox/app-plaza/ShowcaseCard";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useTikTokInspiration } from "@/contexts/TikTokInspirationContext";
 import { useReplicatePrefill } from "@/contexts/ReplicatePrefillContext";
