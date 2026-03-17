@@ -18,7 +18,7 @@ interface TikTokReportProps {
   onNavigate?: (itemId: string) => void;
 }
 
-function LoadingPage() {
+function LoadingPage({ onBack }: { onBack: () => void }) {
   const tips = [
     '正在扫描 TikTok 热门视频...',
     '分析视频内容与卖点匹配度...',
