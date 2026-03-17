@@ -122,7 +122,7 @@ export function MemoryLibraryDrawer({ open, onOpenChange }: Props) {
               </div>
               <div>
                 <label className="text-xs font-medium text-muted-foreground mb-1.5 block">内容</label>
-                <Textarea value={editEntry.content} onChange={(e) => setEditEntry({ ...editEntry, content: e.target.value })} placeholder="输入记忆内容..." className="min-h-[120px] text-sm" maxLength={2000} />
+                <Textarea value={editEntry.content} onChange={(e) => setEditEntry({ ...editEntry, content: e.target.value })} placeholder="输入记忆内容..." className="min-h-[280px] text-sm font-mono" maxLength={5000} />
               </div>
               <div>
                 <label className="text-xs font-medium text-muted-foreground mb-1.5 block">标签（逗号分隔）</label>
