@@ -90,7 +90,7 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                   <span className="w-32 text-right">{t('common.credits')}</span>
                 </div>
                 {usageHistory.map((record) =>
-                <div key={record.id} className="px-6 py-4 flex items-center text-sm border-t border-border">
+                <div key={record.id} className="px-6 py-4 flex items-center text-sm border-t border-border gap-[120px]">
                     <span className="flex-1 text-foreground mr-[150px]">{record.label}</span>
                     <span className="w-48 text-center text-muted-foreground">
                       {new Date(record.date).toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' })}
