@@ -6,11 +6,13 @@ import { useReplicatePrefill } from '@/contexts/ReplicatePrefillContext';
 import { useCredits } from '@/contexts/CreditsContext';
 import { InsufficientCreditsDrawer } from '@/components/modules/InsufficientCreditsDrawer';
 import { statusConfig } from '@/types/history';
-import { History, X, Loader2 } from 'lucide-react';
+import { History, X, ArrowLeft } from 'lucide-react';
 import {
   Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger,
 } from '@/components/ui/sheet';
 import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
 interface TikTokReportProps {
   onNavigate?: (itemId: string) => void;
