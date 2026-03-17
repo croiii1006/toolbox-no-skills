@@ -55,7 +55,7 @@ export function MemoryLibraryDrawer({ open, onOpenChange }: Props) {
   return (
     <>
       <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent side="right" className="w-full sm:max-w-xl p-0 flex flex-col gap-0 [&>button]:hidden">
+        <SheetContent side="right" className="w-full sm:max-w-xl p-0 flex flex-col gap-0 [&>button]:hidden" overlayClassName="bg-white/60 backdrop-blur-sm">
           <SheetHeader className="px-5 pt-5 pb-3 border-b border-border space-y-0">
             <div className="flex items-center justify-between">
               <SheetTitle className="flex items-center gap-2 text-base">
