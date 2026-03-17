@@ -108,7 +108,7 @@ export function TikTokReport({ onNavigate }: TikTokReportProps) {
   const [sellingPoints, setSellingPoints] = useState<string[]>([]);
   const { reportHistory, addReportHistory, updateReportHistoryStatus, deleteReportHistory } = useTikTokInspiration();
   const { setPrefill } = useReplicatePrefill();
-  const { canAfford, shortfall, deduct } = useCredits();
+  const { canAfford, shortfall, deduct, refund } = useCredits();
   const [creditsDrawerOpen, setCreditsDrawerOpen] = useState(false);
   const [creditsShortfall, setCreditsShortfall] = useState(0);
 
