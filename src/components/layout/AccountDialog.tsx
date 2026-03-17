@@ -16,7 +16,7 @@ interface AccountDialogProps {
 export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('account');
-  const { credits, subscriptionCredits, topupCredits, usageHistory } = useCredits();
+  const { credits, subscriptionCredits, topupCredits, giftCredits, usageHistory } = useCredits();
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[900px] w-[90vw] h-[80vh] p-0 gap-0 overflow-hidden bg-background/70 backdrop-blur-xl border-border/50">
@@ -54,12 +54,6 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                     <p className="text-sm text-muted-foreground font-light">{USER_EMAIL}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Button variant="ghost" size="sm" className="gap-1.5 rounded-lg">
-                    <LogOut className="w-4 h-4" />
-                    {t('common.logout')}
-                  </Button>
-                </div>
               </div>
 
               <div className="border border-border rounded-xl p-6">
@@ -69,7 +63,7 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                   </span>
                 </div>
                 <div className="space-y-4 text-sm">
-                  <div className="flex items-center text-accent text-lg font-light">
+                  <div className="flex items-center">
                     <span className="text-muted-foreground w-40 font-thin">{t('common.currentPlan')}</span>
                     <span className="text-foreground font-light">{USER_PLAN}</span>
                   </div>
@@ -85,6 +79,10 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                     <span className="text-muted-foreground w-40 font-light pl-4">{t('common.topupCredits')}</span>
                     <span className="text-foreground font-light tabular-nums">{topupCredits}</span>
                   </div>
+                  <div className="flex items-center">
+                    <span className="text-muted-foreground w-40 font-light pl-4">{t('common.giftCredits')}</span>
+                    <span className="text-foreground font-light tabular-nums">{giftCredits}</span>
+                  </div>
                 </div>
               </div>
             </TabsContent>
@@ -98,8 +96,8 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                   <span className="w-48 text-center">日期</span>
                   <span className="w-32 text-right">{t('common.credits')}</span>
                 </div>
-                {usageHistory.map((record) =>
-                <div key={record.id} className="px-6 py-4 flex items-center text-sm border-t border-border">
+                {usageHistory.map(record => (
+                  <div key={record.id} className="px-6 py-4 flex items-center text-sm border-t border-border">
                     <span className="flex-1 text-foreground">{record.label}</span>
                     <span className={`w-32 text-center ${record.status === '已消耗' ? 'text-destructive' : record.status === '已退还' ? 'text-accent' : 'text-muted-foreground'}`}>
                       {record.status}
@@ -111,12 +109,12 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                       {record.status === '已消耗' ? '-' : '+'}{record.amount}
                     </span>
                   </div>
-                )}
-                {usageHistory.length === 0 &&
-                <div className="py-8 text-center text-muted-foreground text-sm">
+                ))}
+                {usageHistory.length === 0 && (
+                  <div className="py-8 text-center text-muted-foreground text-sm">
                     暂无更多数据
                   </div>
-                }
+                )}
               </div>
             </TabsContent>
 
