@@ -42,7 +42,7 @@ export function ShowcaseDetailDialog({ card, open, onOpenChange, onReplicate }: 
   if (isImage) {
     return (
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="max-w-lg p-0 gap-0 overflow-hidden rounded-2xl">
+        <DialogContent overlayClassName="bg-white/60 backdrop-blur-sm" className="max-w-lg p-0 gap-0 overflow-hidden rounded-2xl border-border/30 bg-background/95 backdrop-blur-md shadow-xl">
           <DialogTitle className="sr-only">{card.title}</DialogTitle>
           <div className="relative aspect-[4/3] bg-muted/30">
             <img src={card.image} alt={card.title} className="w-full h-full object-cover" />
