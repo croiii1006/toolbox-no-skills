@@ -115,26 +115,6 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
               </div>
             </TabsContent>
 
-            {/* Invoices Tab */}
-            <TabsContent value="invoices" className="mt-6">
-              <div className="border border-border rounded-xl overflow-hidden">
-                <div className="bg-muted/50 px-6 py-3 flex items-center text-sm font-medium text-muted-foreground">
-                  <span className="flex-1">日期</span>
-                  <span className="w-32 text-center">类别</span>
-                  <span className="w-32 text-center">金额</span>
-                  <span className="w-32 text-center">状态</span>
-                  <span className="w-32 text-right">发票</span>
-                </div>
-                <div className="py-16 flex flex-col items-center justify-center text-muted-foreground">
-                  <div className="w-16 h-16 mb-4 rounded-lg bg-muted/50 flex items-center justify-center">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="opacity-40">
-                      <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4M4 7l8 4M4 7v10l8 4m0-10v10" />
-                    </svg>
-                  </div>
-                  <span className="text-sm">暂无数据</span>
-                </div>
-              </div>
-            </TabsContent>
           </Tabs>
         </div>
       </DialogContent>
