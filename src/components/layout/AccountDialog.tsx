@@ -16,7 +16,7 @@ interface AccountDialogProps {
 export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('account');
-  const { credits, subscriptionCredits, topupCredits, usageHistory } = useCredits();
+  const { credits, subscriptionCredits, topupCredits, giftCredits, usageHistory } = useCredits();
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[900px] w-[90vw] h-[80vh] p-0 gap-0 overflow-hidden bg-background/70 backdrop-blur-xl border-border/50">
@@ -84,6 +84,10 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                   <div className="flex items-center">
                     <span className="text-muted-foreground w-40 font-light pl-4">{t('common.topupCredits')}</span>
                     <span className="text-foreground font-light tabular-nums">{topupCredits}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-muted-foreground w-40 font-light pl-4">{t('common.giftCredits')}</span>
+                    <span className="text-foreground font-light tabular-nums">{giftCredits}</span>
                   </div>
                 </div>
               </div>

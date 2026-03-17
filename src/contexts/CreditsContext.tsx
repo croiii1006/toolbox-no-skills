@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
-import { USER_SUBSCRIPTION_CREDITS, USER_TOPUP_CREDITS } from '@/constants/user';
+import { USER_SUBSCRIPTION_CREDITS, USER_TOPUP_CREDITS, USER_GIFT_CREDITS } from '@/constants/user';
 
 export interface UsageRecord {
   id: string;
@@ -13,6 +13,7 @@ interface CreditsContextValue {
   credits: number;
   subscriptionCredits: number;
   topupCredits: number;
+  giftCredits: number;
   usageHistory: UsageRecord[];
   deduct: (amount: number, label?: string) => boolean;
   refund: (amount: number, label?: string) => void;
@@ -25,6 +26,7 @@ const CreditsContext = createContext<CreditsContextValue | null>(null);
 export function CreditsProvider({ children }: { children: ReactNode }) {
   const [subscriptionCredits, setSubscriptionCredits] = useState(USER_SUBSCRIPTION_CREDITS);
   const [topupCredits, setTopupCredits] = useState(USER_TOPUP_CREDITS);
+  const [giftCredits, setGiftCredits] = useState(USER_GIFT_CREDITS);
   const [usageHistory, setUsageHistory] = useState<UsageRecord[]>([
     {
       id: 'init-sub',
@@ -40,8 +42,15 @@ export function CreditsProvider({ children }: { children: ReactNode }) {
       date: new Date().toISOString(),
       status: '已获取',
     },
+    {
+      id: 'init-gift',
+      label: '赠送积分',
+      amount: USER_GIFT_CREDITS,
+      date: new Date().toISOString(),
+      status: '已获取',
+    },
   ]);
-  const credits = subscriptionCredits + topupCredits;
+  const credits = subscriptionCredits + topupCredits + giftCredits;
 
   const canAfford = useCallback((amount: number) => credits >= amount, [credits]);
 
@@ -58,16 +67,19 @@ export function CreditsProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const deduct = useCallback((amount: number, label: string = '未知操作') => {
-    if (subscriptionCredits + topupCredits < amount) return false;
+    if (subscriptionCredits + topupCredits + giftCredits < amount) return false;
     let remaining = amount;
     const fromSub = Math.min(remaining, subscriptionCredits);
     remaining -= fromSub;
     const fromTop = Math.min(remaining, topupCredits);
+    remaining -= fromTop;
+    const fromGift = Math.min(remaining, giftCredits);
     setSubscriptionCredits(prev => prev - fromSub);
     setTopupCredits(prev => prev - fromTop);
+    setGiftCredits(prev => prev - fromGift);
     addRecord(label, amount, '已消耗');
     return true;
-  }, [subscriptionCredits, topupCredits, addRecord]);
+  }, [subscriptionCredits, topupCredits, giftCredits, addRecord]);
 
   const refund = useCallback((amount: number, label: string = '退款') => {
     setTopupCredits(prev => prev + amount);
@@ -75,7 +87,7 @@ export function CreditsProvider({ children }: { children: ReactNode }) {
   }, [addRecord]);
 
   return (
-    <CreditsContext.Provider value={{ credits, subscriptionCredits, topupCredits, usageHistory, deduct, refund, canAfford, shortfall }}>
+    <CreditsContext.Provider value={{ credits, subscriptionCredits, topupCredits, giftCredits, usageHistory, deduct, refund, canAfford, shortfall }}>
       {children}
     </CreditsContext.Provider>
   );

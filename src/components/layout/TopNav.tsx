@@ -18,7 +18,7 @@ export function TopNav() {
   const { t, i18n } = useTranslation();
   const { drawerOpen, setDrawerOpen } = useMemory();
   const [accountOpen, setAccountOpen] = useState(false);
-  const { credits, subscriptionCredits, topupCredits } = useCredits();
+  const { credits, subscriptionCredits, topupCredits, giftCredits } = useCredits();
 
   const toggleLanguage = () => {
     const newLang = i18n.language === 'zh' ? 'en' : 'zh';
@@ -101,6 +101,10 @@ export function TopNav() {
                 <div className="flex items-center justify-between pl-6">
                   <span className="text-xs text-muted-foreground">{t('common.topupCredits')}</span>
                   <span className="text-xs font-light text-foreground tabular-nums">{topupCredits}</span>
+                </div>
+                <div className="flex items-center justify-between pl-6">
+                  <span className="text-xs text-muted-foreground">{t('common.giftCredits')}</span>
+                  <span className="text-xs font-light text-foreground tabular-nums">{giftCredits}</span>
                 </div>
               </div>
               
