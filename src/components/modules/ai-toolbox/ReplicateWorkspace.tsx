@@ -115,56 +115,14 @@ interface InspirationVideo {
   source: "trending" | "saved";
 }
 
-const MOCK_TRENDING: InspirationVideo[] = [
-  {
-    id: "t1",
-    title: "夏日防晒喷雾使用技巧",
-    views: "120万",
-    likes: "8.5万",
-    coverGradient: "from-rose-500/60 to-orange-400/60",
-    source: "trending",
-  },
-  {
-    id: "t2",
-    title: "厨房收纳神器开箱",
-    views: "89万",
-    likes: "6.2万",
-    coverGradient: "from-blue-500/60 to-cyan-400/60",
-    source: "trending",
-  },
-  {
-    id: "t3",
-    title: "运动耳机防水测试",
-    views: "156万",
-    likes: "12万",
-    coverGradient: "from-violet-500/60 to-purple-400/60",
-    source: "trending",
-  },
-  {
-    id: "t4",
-    title: "宠物自动喂食器评测",
-    views: "67万",
-    likes: "4.8万",
-    coverGradient: "from-emerald-500/60 to-green-400/60",
-    source: "trending",
-  },
-  {
-    id: "t5",
-    title: "手机支架桌面新玩法",
-    views: "98万",
-    likes: "7.1万",
-    coverGradient: "from-amber-500/60 to-yellow-400/60",
-    source: "trending",
-  },
-  {
-    id: "t6",
-    title: "美白精华28天打卡",
-    views: "210万",
-    likes: "15万",
-    coverGradient: "from-pink-500/60 to-rose-400/60",
-    source: "trending",
-  },
-];
+const MOCK_TRENDING: InspirationVideo[] = TRENDING_VIDEOS.map(v => ({
+  id: v.id,
+  title: v.title,
+  views: v.views,
+  likes: v.likes,
+  coverGradient: v.coverGradient,
+  source: "trending" as const,
+}));
 
 interface ReplicateWorkspaceProps {
   onNavigate?: (itemId: string) => void;
