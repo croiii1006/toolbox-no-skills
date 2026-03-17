@@ -144,7 +144,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
     </section>
 
     {/* 案例 - standalone full-screen section */}
-    <section id="showcase-section" className="flex flex-col px-0 pt-2 pb-6">
+    <section id="showcase-section" className="flex flex-col px-0 pt-2 pb-2">
       <h2 className="text-lg font-normal text-foreground/60 mb-2 shrink-0">案例</h2>
       <div className="flex gap-1 mb-2 shrink-0">
         {CASE_CATEGORIES.map(cat => (
@@ -164,7 +164,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
 
       {/* Cards grid - fills remaining space */}
       <div className="flex flex-col">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 lg:grid-cols-4 lg:gap-2">
           {pagedCases.map((card, i) =>
             <ShowcaseCard
               key={card.title}

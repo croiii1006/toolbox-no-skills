@@ -111,7 +111,7 @@ export function TikTokReportComposer({ onSubmit, disabled }: TikTokReportCompose
           <div className="flex items-center justify-between px-5 py-3 border-t border-border/20">
             <div className="flex items-center gap-3">
               <span className="text-xs text-muted-foreground/70 tabular-nums">
-                预计消耗：约 <span className="text-foreground/80 font-medium">200</span> credit
+                预计消耗：约 <span className="text-foreground/80 font-medium">200</span> 积分
               </span>
             </div>
 
