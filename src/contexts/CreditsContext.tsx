@@ -26,6 +26,7 @@ const CreditsContext = createContext<CreditsContextValue | null>(null);
 export function CreditsProvider({ children }: { children: ReactNode }) {
   const [subscriptionCredits, setSubscriptionCredits] = useState(USER_SUBSCRIPTION_CREDITS);
   const [topupCredits, setTopupCredits] = useState(USER_TOPUP_CREDITS);
+  const [giftCredits, setGiftCredits] = useState(USER_GIFT_CREDITS);
   const [usageHistory, setUsageHistory] = useState<UsageRecord[]>([
     {
       id: 'init-sub',
@@ -41,8 +42,15 @@ export function CreditsProvider({ children }: { children: ReactNode }) {
       date: new Date().toISOString(),
       status: '已获取',
     },
+    {
+      id: 'init-gift',
+      label: '赠送积分',
+      amount: USER_GIFT_CREDITS,
+      date: new Date().toISOString(),
+      status: '已获取',
+    },
   ]);
-  const credits = subscriptionCredits + topupCredits;
+  const credits = subscriptionCredits + topupCredits + giftCredits;
 
   const canAfford = useCallback((amount: number) => credits >= amount, [credits]);
 
