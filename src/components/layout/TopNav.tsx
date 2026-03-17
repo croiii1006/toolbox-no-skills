@@ -149,7 +149,6 @@ export function TopNav() {
                 {t('common.logout')}
               </Button>
             </div>
-            </div>
           </HoverCardContent>
         </HoverCard>
       </div>
