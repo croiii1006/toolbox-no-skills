@@ -67,16 +67,19 @@ export function CreditsProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const deduct = useCallback((amount: number, label: string = '未知操作') => {
-    if (subscriptionCredits + topupCredits < amount) return false;
+    if (subscriptionCredits + topupCredits + giftCredits < amount) return false;
     let remaining = amount;
     const fromSub = Math.min(remaining, subscriptionCredits);
     remaining -= fromSub;
     const fromTop = Math.min(remaining, topupCredits);
+    remaining -= fromTop;
+    const fromGift = Math.min(remaining, giftCredits);
     setSubscriptionCredits(prev => prev - fromSub);
     setTopupCredits(prev => prev - fromTop);
+    setGiftCredits(prev => prev - fromGift);
     addRecord(label, amount, '已消耗');
     return true;
-  }, [subscriptionCredits, topupCredits, addRecord]);
+  }, [subscriptionCredits, topupCredits, giftCredits, addRecord]);
 
   const refund = useCallback((amount: number, label: string = '退款') => {
     setTopupCredits(prev => prev + amount);
