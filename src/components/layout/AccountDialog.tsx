@@ -83,7 +83,7 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
             {/* Usage Tab */}
             <TabsContent value="usage" className="mt-6">
               <div className="border border-border rounded-xl overflow-hidden">
-                <div className="bg-muted/50 px-6 py-3 flex items-center text-sm font-medium text-muted-foreground">
+                <div className="bg-muted/50 px-6 py-3 flex items-center text-sm font-medium text-muted-foreground gap-[120px]">
                   <span className="flex-1 mx-0 mr-[150px]">{t('common.usageDetails')}</span>
                   
                   <span className="w-48 text-center">日期</span>
