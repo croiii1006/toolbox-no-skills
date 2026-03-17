@@ -63,7 +63,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
   const [activeCaseCategory, setActiveCaseCategory] = useState<string>('market');
   const [page, setPage] = useState(0);
   const [detailCard, setDetailCard] = useState<ShowcaseCardData | null>(null);
-  const isVisualCategory = activeCaseCategory === 'image' || activeCaseCategory === 'video';
+  const isVisualCategory = activeCaseCategory === 'video';
   const ITEMS_PER_PAGE = isVisualCategory ? 12 : 16; // visual: 4x3, others: 4x4
 
   const filteredCases = SHOWCASE_CARDS.filter(c => c.category === activeCaseCategory);
