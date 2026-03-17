@@ -118,7 +118,7 @@ export function MemoryLibraryDrawer({ open, onOpenChange }: Props) {
           <div className="space-y-4 py-2">
               <div>
                 <label className="text-xs font-medium text-muted-foreground mb-1.5 block">标题</label>
-                <Input value={editEntry.title} onChange={(e) => setEditEntry({ ...editEntry, title: e.target.value })} placeholder="输入标题" className="h-9" maxLength={100} onFocus={(e) => e.target.setSelectionRange(e.target.value.length, e.target.value.length)} />
+                <Input value={editEntry.title} onChange={(e) => setEditEntry({ ...editEntry, title: e.target.value })} placeholder="输入标题" className="h-9" maxLength={100} />
               </div>
               <div>
                 <div className="flex items-center justify-between mb-1.5">
