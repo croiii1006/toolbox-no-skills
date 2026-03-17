@@ -87,7 +87,7 @@ export function CreditsProvider({ children }: { children: ReactNode }) {
   }, [addRecord]);
 
   return (
-    <CreditsContext.Provider value={{ credits, subscriptionCredits, topupCredits, usageHistory, deduct, refund, canAfford, shortfall }}>
+    <CreditsContext.Provider value={{ credits, subscriptionCredits, topupCredits, giftCredits, usageHistory, deduct, refund, canAfford, shortfall }}>
       {children}
     </CreditsContext.Provider>
   );
