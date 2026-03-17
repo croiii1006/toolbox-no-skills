@@ -121,12 +121,11 @@ export function MemoryLibraryDrawer({ open, onOpenChange }: Props) {
                 <Input value={editEntry.title} onChange={(e) => setEditEntry({ ...editEntry, title: e.target.value })} placeholder="输入标题" className="h-9" maxLength={100} />
               </div>
               <div>
-                <label className="text-xs font-medium text-muted-foreground mb-1.5 block">内容</label>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="text-xs font-medium text-muted-foreground">内容</label>
+                  <span className="text-[10px] text-muted-foreground tabular-nums">{editEntry.content.length} / 5000</span>
+                </div>
                 <Textarea value={editEntry.content} onChange={(e) => setEditEntry({ ...editEntry, content: e.target.value })} placeholder="输入记忆内容..." className="min-h-[280px] text-sm font-mono" maxLength={5000} />
-              </div>
-              <div>
-                <label className="text-xs font-medium text-muted-foreground mb-1.5 block">标签（逗号分隔）</label>
-                <Input value={editEntry.tags.join(', ')} onChange={(e) => setEditEntry({ ...editEntry, tags: e.target.value.split(',').map((t) => t.trim()).filter(Boolean) })} placeholder="标签1, 标签2" className="h-9" />
               </div>
             </div>
           }
