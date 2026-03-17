@@ -153,24 +153,6 @@ export function MarketInsightComposer({ onSubmit, disabled, initialData }: Marke
             </div>
           </div>
 
-          {/* Selected memories */}
-          {selectedMemoryIds.length > 0 &&
-          <div className="px-5 pb-2 flex flex-wrap gap-1.5">
-              {selectedMemoryIds.map((id) => {
-              const item = memoryItems.find((m) => m.id === id);
-              if (!item) return null;
-              return (
-                <span key={id} className="inline-flex items-center gap-1 h-6 rounded-full bg-primary/10 border border-primary/20 px-2 text-xs text-primary">
-                    <Database className="w-3 h-3" />
-                    {item.name}
-                    <button onClick={() => toggleMemory(id)} className="hover:text-foreground transition-colors">
-                      <X className="w-3 h-3" />
-                    </button>
-                  </span>);
-
-            })}
-            </div>
-          }
 
           {/* Bottom toolbar */}
           <div className="flex items-center justify-between px-5 py-3 border-t border-border/20">
