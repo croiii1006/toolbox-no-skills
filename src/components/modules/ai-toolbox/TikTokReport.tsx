@@ -35,7 +35,16 @@ function LoadingPage({ onBack }: { onBack: () => void }) {
   }, []);
 
   return (
-    <div className="min-h-full flex flex-col items-center justify-center p-6">
+    <div className="min-h-full flex flex-col items-center justify-center p-6 relative">
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={onBack}
+        className="absolute top-4 left-4 gap-1.5 text-muted-foreground hover:text-foreground"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        返回
+      </Button>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
