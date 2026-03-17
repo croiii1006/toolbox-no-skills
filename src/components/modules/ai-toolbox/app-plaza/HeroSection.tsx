@@ -48,7 +48,7 @@ const BRAND_FLOW = [
 const CASE_CATEGORIES = [
   { id: 'market', label: '市场洞察' },
   { id: 'campaign', label: '策划方案' },
-  { id: 'video', label: '视频复刻' },
+  { id: 'video', label: '灵感库' },
 ] as const;
 
 
