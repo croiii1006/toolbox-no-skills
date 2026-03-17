@@ -13,6 +13,7 @@ interface CreditsContextValue {
   credits: number;
   subscriptionCredits: number;
   topupCredits: number;
+  giftCredits: number;
   usageHistory: UsageRecord[];
   deduct: (amount: number, label?: string) => boolean;
   refund: (amount: number, label?: string) => void;
