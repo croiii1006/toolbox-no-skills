@@ -28,7 +28,7 @@ export function MemoryLibraryDrawer({ open, onOpenChange }: Props) {
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
 
   const filtered = useMemo(() => {
-    let list = entries;
+    let list = [...entries].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
     if (search.trim()) {
       const q = search.toLowerCase();
       list = list.filter((e) => e.title.toLowerCase().includes(q) || e.content.toLowerCase().includes(q) || e.tags.some((t) => t.includes(q)));
