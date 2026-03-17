@@ -1344,11 +1344,8 @@ function InspirationCard({
             </p>
           </div>
           {/* Hover overlay */}
-          <div className="absolute inset-0 flex flex-col items-center justify-end pb-10 bg-foreground/55 opacity-0 transition-opacity duration-300 group-hover:opacity-100 rounded-[16px]">
-            <div className="flex items-center gap-3 text-[11px] text-background/80">
-              <span>👍 {video.likes}</span>
-              <span>👁 {video.views}</span>
-            </div>
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-foreground/55 opacity-0 transition-opacity duration-300 group-hover:opacity-100 rounded-[16px]">
+            <span className="text-[11px] text-background/90 font-medium">查看视频详情</span>
           </div>
         </div>
       </div>
