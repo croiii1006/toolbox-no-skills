@@ -39,6 +39,8 @@ export function ShowcaseCard({
           <img
             src={card.image}
             alt={card.title}
+            loading="lazy"
+            decoding="async"
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent" />
