@@ -110,7 +110,7 @@ export function MemoryLibraryDrawer({ open, onOpenChange }: Props) {
       </Sheet>
 
       <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-2xl [&>div]:backdrop-blur-md" overlayClassName="bg-white/60 backdrop-blur-sm">
           <DialogHeader>
             <DialogTitle>{editEntry?.id ? '编辑记忆' : '新增记忆'}</DialogTitle>
           </DialogHeader>
