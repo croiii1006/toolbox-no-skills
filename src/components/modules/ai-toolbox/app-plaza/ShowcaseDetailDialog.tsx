@@ -63,7 +63,7 @@ export function ShowcaseDetailDialog({ card, open, onOpenChange, onReplicate }: 
   // Video dialog: full detail layout with playable video
   return (
     <Dialog open={open} onOpenChange={(v) => { if (!v) { setIsPlaying(false); } onOpenChange(v); }}>
-      <DialogContent className="max-w-3xl p-0 gap-0 overflow-hidden rounded-2xl">
+      <DialogContent overlayClassName="bg-white/60 backdrop-blur-sm" className="max-w-3xl p-0 gap-0 overflow-hidden rounded-2xl border-border/30 bg-background/95 backdrop-blur-md shadow-xl">
         <DialogTitle className="sr-only">{card.title}</DialogTitle>
         <div className="flex flex-col sm:flex-row sm:min-h-[420px]">
           {/* Video preview */}

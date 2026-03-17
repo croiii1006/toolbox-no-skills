@@ -1323,25 +1323,32 @@ function InspirationCard({
     <>
       <div
         onClick={() => setDetailOpen(true)}
-        className="group rounded-xl border border-border/30 bg-card/60 overflow-hidden cursor-pointer hover:shadow-md transition-all"
+        className="relative group cursor-pointer"
       >
-        <div
-          className={cn(
-            "aspect-video bg-gradient-to-br flex items-center justify-center relative",
-            video.coverGradient,
-          )}
-        >
-          <Play className="w-8 h-8 text-white/70 group-hover:text-white transition-colors" />
-          <div className="absolute bottom-1.5 right-1.5 flex items-center gap-1 bg-black/50 rounded-full px-2 py-0.5">
-            <Flame className="w-3 h-3 text-orange-400" />
-            <span className="text-[10px] text-white">{video.views}</span>
+        <div className="relative overflow-hidden rounded-[16px] aspect-[4/3] border border-border/20">
+          {/* Gradient background as cover */}
+          <div className={cn("absolute inset-0 bg-gradient-to-br", video.coverGradient)} />
+          {/* Play icon */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <Play className="w-10 h-10 text-white/60 group-hover:text-white/90 transition-colors" />
           </div>
-        </div>
-        <div className="p-2.5">
-          <p className="text-xs font-medium text-foreground/80 truncate">{video.title}</p>
-          <div className="flex items-center gap-2 mt-1 text-[10px] text-muted-foreground">
-            <span>👍 {video.likes}</span>
-            <span>👁 {video.views}</span>
+          {/* Views badge */}
+          <div className="absolute bottom-2.5 right-2.5 flex items-center gap-1 bg-foreground/40 backdrop-blur-sm rounded-full px-2.5 py-1">
+            <Flame className="w-3 h-3 text-orange-400" />
+            <span className="text-[11px] text-white font-medium">{video.views}</span>
+          </div>
+          {/* Bottom gradient + title */}
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent pt-10 pb-3 px-3">
+            <p className="text-background text-xs font-medium leading-snug line-clamp-2 drop-shadow-sm">
+              {video.title}
+            </p>
+          </div>
+          {/* Hover overlay */}
+          <div className="absolute inset-0 flex flex-col items-center justify-end pb-10 bg-foreground/55 opacity-0 transition-opacity duration-300 group-hover:opacity-100 rounded-[16px]">
+            <div className="flex items-center gap-3 text-[11px] text-background/80">
+              <span>👍 {video.likes}</span>
+              <span>👁 {video.views}</span>
+            </div>
           </div>
         </div>
       </div>
