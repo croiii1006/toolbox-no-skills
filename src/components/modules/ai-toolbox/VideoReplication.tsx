@@ -806,9 +806,16 @@ export function VideoReplication({ onNavigate }: VideoReplicationProps) {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setMemoryDialogOpen(true)}
-                className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-muted/30 text-muted-foreground/60 hover:bg-foreground/5 hover:text-muted-foreground transition-colors">
-                <Database className="w-3 h-3" />
-                <span className="text-[11px]">记忆库{selectedMemoryIds.length > 0 ? ` (${selectedMemoryIds.length})` : ''}</span>
+                className={cn(
+                  'h-8 rounded-full border flex items-center justify-center gap-1.5 px-3 transition-all duration-300 ease-out',
+                  selectedMemoryIds.length > 0
+                    ? 'border-orange-400/60 bg-orange-400/10 text-orange-400'
+                    : 'border-border/40 text-muted-foreground hover:text-foreground hover:border-border'
+                )}>
+                <Database className="w-4 h-4" />
+                <span className="text-[11px] font-medium whitespace-nowrap">
+                  {selectedMemoryIds.length > 0 ? `${selectedMemoryIds.length} 个记忆库` : '记忆库'}
+                </span>
               </button>
             </div>
 
