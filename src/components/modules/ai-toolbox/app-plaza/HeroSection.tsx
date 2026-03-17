@@ -167,7 +167,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {pagedCases.map((card, i) =>
             <ShowcaseCard
-              key={`${card.category}-${page}-${i}`}
+              key={card.title}
               card={card}
               variant={isVisualCategory ? 'visual' : 'default'}
               onClick={() => {

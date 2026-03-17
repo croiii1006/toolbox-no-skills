@@ -39,6 +39,8 @@ export function ShowcaseCard({
           <img
             src={card.image}
             alt={card.title}
+            loading="lazy"
+            decoding="async"
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent" />
@@ -110,6 +112,8 @@ export function ShowcaseCard({
               <div className="relative h-[70px] rounded-[3px] mx-[5px] mb-[5px] overflow-hidden">
                 <img
                   alt=""
+                  loading="lazy"
+                  decoding="async"
                   className="absolute inset-0 max-w-none object-cover w-full h-full"
                   src={card.image}
                 />
