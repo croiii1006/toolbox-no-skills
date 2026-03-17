@@ -344,7 +344,16 @@ export function BrandHealth({ onNavigate }: BrandHealthProps) {
   if (view === 'loading') {
     return (
       <>
-        <div className="min-h-full flex items-center justify-center p-8">
+        <div className="min-h-full flex items-center justify-center p-8 relative">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => { setView('input'); }}
+            className="absolute top-4 left-4 gap-1.5 text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            返回
+          </Button>
           <div className="text-center space-y-4 animate-fade-in">
             <Loader2 className="w-8 h-8 text-accent animate-spin mx-auto" />
             <h2 className="text-lg font-medium text-foreground">报告生成中</h2>
