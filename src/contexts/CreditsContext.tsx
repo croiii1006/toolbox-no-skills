@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
-import { USER_SUBSCRIPTION_CREDITS, USER_TOPUP_CREDITS } from '@/constants/user';
+import { USER_SUBSCRIPTION_CREDITS, USER_TOPUP_CREDITS, USER_GIFT_CREDITS } from '@/constants/user';
 
 export interface UsageRecord {
   id: string;
