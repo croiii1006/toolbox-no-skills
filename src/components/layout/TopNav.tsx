@@ -1,4 +1,4 @@
-import { ChevronDown, Globe, Database, Zap, Sparkles, CalendarClock, LogOut } from 'lucide-react';
+import { ChevronDown, Globe, Database, Zap, CalendarClock, LogOut } from 'lucide-react';
 import logoDark from '@/assets/logo_dark.svg';
 import { useModule } from '@/contexts/ModuleContext';
 import { MODULES, ModuleType } from '@/types/modules';
@@ -89,7 +89,7 @@ export function TopNav() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Sparkles className="w-4 h-4" />
+                    <Zap className="w-4 h-4" />
                     {t('common.credits')}
                   </div>
                   <span className="text-sm font-light text-foreground tabular-nums">{credits}</span>
