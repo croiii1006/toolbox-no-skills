@@ -52,24 +52,6 @@ const MOCK_VIDEOS: TikTokVideo[] = [
     metrics: { viewsText: '3.8M', likesText: '156K', gmvText: '$32.1K', trendText: '+45.3%' },
     hitRate: 97, hitRateText: '97%', source: 'tiktok',
   },
-  {
-    videoId: 'v005', videoUrl: '', originalUrl: 'https://www.tiktok.com/@user/video/005',
-    durationText: '0:52', isMuted: true,
-    title: '卫生间收纳大改造！从杂乱到整洁只需要这5步',
-    likeCountText: '33.8K', viewCountText: '620K', likeCount: 33800, viewCount: 620000,
-    analysisTitle: '视频解析', analysisText: '策略: 步骤教程类，结构清晰易模仿，收藏率高',
-    metrics: { viewsText: '620K', likesText: '33.8K', gmvText: '$5.1K', trendText: '+12.0%' },
-    hitRate: 78, hitRateText: '78%', source: 'tiktok',
-  },
-  {
-    videoId: 'v006', videoUrl: '', originalUrl: 'https://www.tiktok.com/@user/video/006',
-    durationText: '0:41', isMuted: false,
-    title: 'POV: 你终于找到了完美的桌面收纳方案 #desksetup',
-    likeCountText: '210K', viewCountText: '5.2M', likeCount: 210000, viewCount: 5200000,
-    analysisTitle: '视频解析', analysisText: '策略: POV 视角 + ASMR 元素，沉浸式体验带动互动',
-    metrics: { viewsText: '5.2M', likesText: '210K', gmvText: '$45.8K', trendText: '+68.5%' },
-    hitRate: 99, hitRateText: '99%', source: 'tiktok',
-  },
 ];
 
 interface TikTokReportResultsProps {
