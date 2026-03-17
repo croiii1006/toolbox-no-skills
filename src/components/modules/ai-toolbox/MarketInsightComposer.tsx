@@ -252,7 +252,7 @@ export function MarketInsightComposer({ onSubmit, disabled, initialData }: Marke
         items={memoryItems}
         selectedIds={selectedMemoryIds}
         onToggle={toggleMemory}
-        maxChars={2000} />
+        />
       
     </div>);
 
