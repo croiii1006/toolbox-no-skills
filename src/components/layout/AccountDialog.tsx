@@ -16,7 +16,7 @@ interface AccountDialogProps {
 export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('account');
-  const { credits, subscriptionCredits, topupCredits, usageHistory } = useCredits();
+  const { credits, subscriptionCredits, topupCredits, giftCredits, usageHistory } = useCredits();
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[900px] w-[90vw] h-[80vh] p-0 gap-0 overflow-hidden bg-background/70 backdrop-blur-xl border-border/50">
