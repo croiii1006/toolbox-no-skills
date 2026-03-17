@@ -189,7 +189,7 @@ export function TikTokReport({ onNavigate }: TikTokReportProps) {
   };
 
   if (phase === 'loading') {
-    return <LoadingPage />;
+    return <LoadingPage onBack={handleBack} />;
   }
 
   if (phase === 'results') {
