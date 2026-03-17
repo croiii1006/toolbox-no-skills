@@ -112,6 +112,8 @@ export function ShowcaseCard({
               <div className="relative h-[70px] rounded-[3px] mx-[5px] mb-[5px] overflow-hidden">
                 <img
                   alt=""
+                  loading="lazy"
+                  decoding="async"
                   className="absolute inset-0 max-w-none object-cover w-full h-full"
                   src={card.image}
                 />
