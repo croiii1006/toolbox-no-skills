@@ -1,4 +1,5 @@
 import { Play, Heart, MessageSquare } from 'lucide-react';
+import { TRENDING_VIDEOS } from '@/constants/trending-videos';
 import logoDark from '@/assets/logo_dark.svg';
 
 export interface ShowcaseCardDetail {

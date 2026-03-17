@@ -1,4 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect, useMemo } from "react";
+import { TRENDING_VIDEOS } from '@/constants/trending-videos';
 import {
   Video,
   ImageIcon,
