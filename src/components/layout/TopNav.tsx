@@ -18,7 +18,7 @@ export function TopNav() {
   const { t, i18n } = useTranslation();
   const { drawerOpen, setDrawerOpen } = useMemory();
   const [accountOpen, setAccountOpen] = useState(false);
-  const { credits, subscriptionCredits, topupCredits } = useCredits();
+  const { credits, subscriptionCredits, topupCredits, giftCredits } = useCredits();
 
   const toggleLanguage = () => {
     const newLang = i18n.language === 'zh' ? 'en' : 'zh';
