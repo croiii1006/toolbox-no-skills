@@ -54,12 +54,6 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                     <p className="text-sm text-muted-foreground font-light">{USER_EMAIL}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Button variant="ghost" size="sm" className="gap-1.5 rounded-lg">
-                    <LogOut className="w-4 h-4" />
-                    {t('common.logout')}
-                  </Button>
-                </div>
               </div>
 
               <div className="border border-border rounded-xl p-6">

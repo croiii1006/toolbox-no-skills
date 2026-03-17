@@ -142,23 +142,13 @@ export function TopNav() {
                 <p className="text-xs text-muted-foreground truncate max-w-[200px]">{USER_EMAIL}</p>
               </div>
               <Button
+                  variant="ghost"
                   size="sm"
-                  className="rounded-lg bg-foreground text-background hover:bg-foreground/90 text-xs font-light px-5"
-                  asChild>
-                  
-                <a href="https://www.oran.cn/" target="_blank" rel="noopener noreferrer" className="font-light">
-                  {t('common.upgrade')}
-                </a>
+                  className="rounded-lg text-xs font-light text-muted-foreground hover:text-destructive gap-1.5">
+                <LogOut className="w-3.5 h-3.5" />
+                {t('common.logout')}
               </Button>
-              <div className="w-full flex items-center justify-between pt-2 border-t border-border">
-                <span className="text-sm text-muted-foreground">{t('common.credits')}</span>
-                <button
-                    onClick={() => setAccountOpen(true)}
-                    className="flex items-center gap-1 text-sm font-light text-foreground hover:text-primary transition-colors">
-                    
-                  {credits} <span className="text-muted-foreground">→</span>
-                </button>
-              </div>
+            </div>
             </div>
           </HoverCardContent>
         </HoverCard>
