@@ -33,17 +33,31 @@ export function ShowcaseCard({
   onClick: () => void;
   variant?: 'default' | 'visual';
 }) {
+  const isVideoCard = card.category === 'video';
+
   if (variant === 'visual') {
     return (
       <div className="relative group cursor-pointer" onClick={onClick}>
         <div className="relative overflow-hidden rounded-[16px] aspect-[4/3] border border-border/20">
-          <img
-            src={card.image}
-            alt={card.title}
-            loading="lazy"
-            decoding="async"
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
+          {isVideoCard ? (
+            <video
+              src={card.image}
+              muted
+              loop
+              autoPlay
+              playsInline
+              preload="metadata"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          ) : (
+            <img
+              src={card.image}
+              alt={card.title}
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 p-3">
             <p className="text-background text-xs font-medium leading-snug line-clamp-2 drop-shadow-sm">
@@ -111,13 +125,25 @@ export function ShowcaseCard({
               </div>
               {/* Thumbnail */}
               <div className="relative h-[70px] rounded-[3px] mx-[5px] mb-[5px] overflow-hidden">
-                <img
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                  className="absolute inset-0 max-w-none object-cover w-full h-full"
-                  src={card.image}
-                />
+                {isVideoCard ? (
+                  <video
+                    src={card.image}
+                    muted
+                    loop
+                    autoPlay
+                    playsInline
+                    preload="metadata"
+                    className="absolute inset-0 max-w-none object-cover w-full h-full"
+                  />
+                ) : (
+                  <img
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 max-w-none object-cover w-full h-full"
+                    src={card.image}
+                  />
+                )}
               </div>
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-muted to-transparent" />
             </div>
@@ -219,11 +245,12 @@ export const SHOWCASE_CARDS: ShowcaseCardData[] = [
     title: v.title,
     desc: v.desc,
     hoverText: '点击复刻此爆款视频',
-    image: '/placeholder.svg',
+    image: v.videoUrl || '/app-plaza-inspiration-temp.mp4',
     miniTitle: v.title,
     targetId: 'replicate-video',
     category: 'video',
+    detail: v.detail,
   } as ShowcaseCardData)),
-  { title: '互动投票视频', desc: '带互动选项的产品投票与调研视频', hoverText: '点击查看视频生成案例', image: '/placeholder.svg', miniTitle: '互动投票视频', targetId: 'reference-to-video', category: 'video' },
-  { title: 'AI数字人带货视频', desc: '虚拟数字人产品讲解与带货视频', hoverText: '点击查看视频生成案例', image: '/placeholder.svg', miniTitle: 'AI数字人带货视频', targetId: 'reference-to-video', category: 'video' },
+  { title: '互动投票视频', desc: '带互动选项的产品投票与调研视频', hoverText: '点击查看视频生成案例', image: '/app-plaza-inspiration-temp.mp4', miniTitle: '互动投票视频', targetId: 'reference-to-video', category: 'video' },
+  { title: 'AI数字人带货视频', desc: '虚拟数字人产品讲解与带货视频', hoverText: '点击查看视频生成案例', image: '/app-plaza-inspiration-temp.mp4', miniTitle: 'AI数字人带货视频', targetId: 'reference-to-video', category: 'video' },
 ];

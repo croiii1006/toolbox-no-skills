@@ -52,13 +52,17 @@ export function TikTokVideoCard({ video, onReplicate, onPreview }: TikTokVideoCa
       {/* Video preview area - portrait 9:16 */}
       <div
         onClick={() => onPreview?.()}
-        className={cn('relative aspect-[9/16] bg-gradient-to-br flex items-center justify-center cursor-pointer shrink-0', coverColors[colorIdx])}
+        className="relative aspect-[9/16] flex items-center justify-center cursor-pointer shrink-0 overflow-hidden"
       >
-        {video.videoUrl ? (
-          <video src={video.videoUrl} muted={muted} className="absolute inset-0 w-full h-full object-cover" />
-        ) : (
-          <Play className="w-10 h-10 text-foreground/15" />
-        )}
+        <video
+          src={video.videoUrl || '/app-plaza-inspiration-temp.mp4'}
+          muted={muted}
+          loop
+          autoPlay
+          playsInline
+          preload="metadata"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
 
         {/* Bottom fade overlay */}
         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-card to-transparent pointer-events-none" />

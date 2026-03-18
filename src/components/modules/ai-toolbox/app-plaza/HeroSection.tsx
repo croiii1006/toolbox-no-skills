@@ -225,6 +225,9 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
           },
         });
         onNavigate(detailCard.targetId);
+        requestAnimationFrame(() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
       }}
     />
     </>

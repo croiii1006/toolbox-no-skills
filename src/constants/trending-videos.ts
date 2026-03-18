@@ -16,6 +16,11 @@ const COVER_GRADIENTS = [
   'from-fuchsia-500/60 to-pink-400/60',
 ];
 
+let BASE_TRENDING_VIDEOS: TrendingVideoItem[];
+
+export let TRENDING_VIDEOS: TrendingVideoItem[] = [];
+export const TEMP_TRENDING_VIDEO_URL = '/app-plaza-inspiration-temp.mp4';
+
 export interface TrendingVideoDetail {
   author?: string;
   businessType?: string;
@@ -33,10 +38,11 @@ export interface TrendingVideoItem {
   views: string;
   likes: string;
   coverGradient: string;
+  videoUrl?: string;
   detail?: TrendingVideoDetail;
 }
 
-export const TRENDING_VIDEOS: TrendingVideoItem[] = [
+BASE_TRENDING_VIDEOS = [
   { id: 't1', title: 'Red Bull 极限运动混剪', desc: '高动态风格化饮料广告，播放量 67 万', views: '67万', likes: '1.5万', coverGradient: COVER_GRADIENTS[0], detail: { author: 'Red Bull Official', businessType: '饮料品牌', purpose: '品牌形象推广', audience: '18-35岁运动爱好者', techHighlight: 'AI 动态剪辑 + 风格迁移', stats: { views: '67万', likes: '1.5万', comments: '3200', shares: '8900' }, tags: ['极限运动', '品牌广告', '动感剪辑'] } },
   { id: 't2', title: '护肤品成分可视化', desc: '透明质酸分子动画 + 产品展示，播放量 120 万', views: '120万', likes: '8.5万', coverGradient: COVER_GRADIENTS[1], detail: { author: '护肤研究所', businessType: '美妆护肤', purpose: '产品教育种草', audience: '20-40岁女性', techHighlight: 'AI 分子动画生成', stats: { views: '120万', likes: '8.5万', comments: '1.2万', shares: '2.8万' }, tags: ['护肤', '成分党', '科普'] } },
   { id: 't3', title: '咖啡拉花慢镜头', desc: '极致美学慢动作咖啡制作过程，播放量 89 万', views: '89万', likes: '6.2万', coverGradient: COVER_GRADIENTS[2], detail: { author: '咖啡美学工作室', businessType: '餐饮', purpose: '品牌美学传播', audience: '咖啡爱好者', techHighlight: 'AI 超级慢动作增强', stats: { views: '89万', likes: '6.2万', comments: '4500', shares: '1.2万' }, tags: ['咖啡', '慢镜头', '美学'] } },
@@ -68,3 +74,8 @@ export const TRENDING_VIDEOS: TrendingVideoItem[] = [
   { id: 't29', title: '滑板技巧展示', desc: '街头滑板花式动作合集，播放量 320 万', views: '320万', likes: '23万', coverGradient: COVER_GRADIENTS[8], detail: { author: '滑板少年', businessType: '运动', purpose: '才艺展示', audience: '滑板爱好者', techHighlight: 'AI 慢动作 + 动作分解', stats: { views: '320万', likes: '23万', comments: '3.5万', shares: '8.2万' }, tags: ['滑板', '技巧', '街头'] } },
   { id: 't30', title: '品牌联名开箱', desc: '热门品牌联名款产品首发开箱，播放量 155 万', views: '155万', likes: '10万', coverGradient: COVER_GRADIENTS[9], detail: { author: '联名速报', businessType: '潮流', purpose: '新品开箱', audience: '潮流消费者', techHighlight: 'AI 产品细节增强', stats: { views: '155万', likes: '10万', comments: '6800', shares: '2.2万' }, tags: ['联名', '开箱', '潮流'] } },
 ];
+
+TRENDING_VIDEOS = BASE_TRENDING_VIDEOS.map((video) => ({
+  ...video,
+  videoUrl: video.videoUrl || TEMP_TRENDING_VIDEO_URL,
+}));

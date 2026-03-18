@@ -115,6 +115,7 @@ interface InspirationVideo {
   views: string;
   likes: string;
   coverGradient: string;
+  videoUrl?: string;
   source: "trending" | "saved";
 }
 
@@ -124,8 +125,10 @@ const MOCK_TRENDING: InspirationVideo[] = TRENDING_VIDEOS.map(v => ({
   views: v.views,
   likes: v.likes,
   coverGradient: v.coverGradient,
+  videoUrl: v.videoUrl,
   source: "trending" as const,
 }));
+
 
 interface ReplicateWorkspaceProps {
   onNavigate?: (itemId: string) => void;
@@ -662,14 +665,15 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
                   {styleVideoUrl ? (
                     <video src={styleVideoUrl} className="max-h-[80vh] w-auto object-contain" controls autoPlay />
                   ) : inspirationVideo ? (
-                    <div
-                      className={cn(
-                        "w-[300px] aspect-[9/16] bg-gradient-to-br flex items-center justify-center",
-                        inspirationVideo.coverGradient,
-                      )}
-                    >
-                      <span className="text-background text-lg font-medium">{inspirationVideo.title}</span>
-                    </div>
+                    <video
+                      src={inspirationVideo.videoUrl || '/app-plaza-inspiration-temp.mp4'}
+                      className="w-full h-full object-cover"
+                      muted
+                      loop
+                      autoPlay
+                      playsInline
+                      controls
+                    />
                   ) : null}
                 </div>
               </DialogContent>
@@ -1021,7 +1025,14 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
                     </div>
                   ) : inspirationVideo ? (
                     <div className="relative w-[120px] h-[120px] rounded-xl overflow-hidden border border-border/40 group">
-                      <div className={cn("absolute inset-0 bg-gradient-to-br", inspirationVideo.coverGradient)} />
+                      <video
+                        src={inspirationVideo.videoUrl || '/app-plaza-inspiration-temp.mp4'}
+                        className="absolute inset-0 w-full h-full object-cover"
+                        muted
+                        loop
+                        autoPlay
+                        playsInline
+                      />
                       <button
                         className="absolute top-1 right-1 p-0.5 rounded-full bg-background/80 hover:bg-background transition-colors opacity-0 group-hover:opacity-100"
                         onClick={() => setInspirationVideo(null)}
@@ -1030,6 +1041,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
                       </button>
                     </div>
                   ) : (
+
                     <button
                       onClick={() => videoInputRef.current?.click()}
                       className="w-[120px] h-[100px] border-2 border-dashed rounded-xl flex flex-col items-center justify-center gap-1.5 transition-colors border-border/40 hover:border-foreground/20 hover:bg-muted/20"
@@ -1304,7 +1316,7 @@ function InspirationCard({
     title: video.title,
     desc: trendingData?.desc || '',
     hoverText: '点击复刻此爆款视频',
-    image: '/placeholder.svg',
+    image: video.videoUrl || '/app-plaza-inspiration-temp.mp4',
     miniTitle: video.title,
     targetId: 'replicate-video',
     category: 'video',
@@ -1325,13 +1337,21 @@ function InspirationCard({
         onClick={() => setDetailOpen(true)}
         className="relative group cursor-pointer"
       >
-        <div className="relative overflow-hidden rounded-[16px] aspect-[4/3] border border-border/20">
-          {/* Gradient background as cover */}
-          <div className={cn("absolute inset-0 bg-gradient-to-br", video.coverGradient)} />
+       <div className="relative overflow-hidden rounded-[16px] aspect-[4/3] border border-border/20">
+          <video
+            src={video.videoUrl || '/app-plaza-inspiration-temp.mp4'}
+            muted
+            loop
+            autoPlay
+            playsInline
+            preload="metadata"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
           {/* Play icon */}
           <div className="absolute inset-0 flex items-center justify-center">
             <Play className="w-10 h-10 text-white/60 group-hover:text-white/90 transition-colors" />
           </div>
+
           {/* Views badge */}
           <div className="absolute bottom-2.5 right-2.5 flex items-center gap-1 bg-foreground/40 backdrop-blur-sm rounded-full px-2.5 py-1">
             <Flame className="w-3 h-3 text-orange-400" />

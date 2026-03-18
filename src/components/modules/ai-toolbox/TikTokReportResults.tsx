@@ -162,20 +162,16 @@ export function TikTokReportResults({ category, sellingPoints, onBack, onReplica
           </button>
 
           <div className="w-full max-w-sm aspect-[9/16] relative" onClick={(e) => e.stopPropagation()}>
-            {previewVideo.videoUrl ? (
-              <video
-                key={previewVideo.videoId}
-                src={previewVideo.videoUrl}
-                controls
-                autoPlay
-                className="w-full h-full object-contain rounded-2xl"
-              />
-            ) : (
-              <div className={cn('w-full h-full rounded-2xl bg-gradient-to-br flex flex-col items-center justify-center gap-3', coverColors[previewColorIdx])}>
-                <Play className="w-16 h-16 text-foreground/20" />
-                <p className="text-foreground/40 text-sm font-medium max-w-[80%] text-center line-clamp-2">{previewVideo.title}</p>
-              </div>
-            )}
+            <video
+              src={previewVideo.videoUrl || '/app-plaza-inspiration-temp.mp4'}
+              className="w-full h-full rounded-2xl object-cover"
+              controls
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+            />
           </div>
         </div>
       )}
