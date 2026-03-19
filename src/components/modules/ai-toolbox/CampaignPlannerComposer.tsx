@@ -285,7 +285,7 @@ export function CampaignPlannerComposer({ onSubmit, disabled, initialData }: Cam
                 options={BUDGETS}
                 value={budget}
                 onChange={setBudget}
-                placeholder="选择量级"
+                placeholder="选择量级（选填）"
                 show={showBudgetPicker}
                 setShow={setShowBudgetPicker} />
               
